@@ -1,5 +1,5 @@
-# YunSuan
-This repo includes XiangShan's function units
+# AMU
+This repo includes XiangShan's matrix unit AMU.
 
 
 ## Unit-Test with Verilator
@@ -13,7 +13,7 @@ Others:
 * `make clean` to clean build dir.
 * `make clean-softfloat` to clean softfloat compile dir.
 
-## Scripts
+## Scripts for Parallel Emu & Log Analysis
 
 * `make emu EMU_TRACE=1`
 * `cd scripts`
