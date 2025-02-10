@@ -2,7 +2,7 @@
 #include <fstream>
 #include <torch/torch.h>
 
-#define DIM 2
+#define DIM 8
 
 int main() {
   torch::Tensor fp_a = torch::rand({DIM, DIM});
