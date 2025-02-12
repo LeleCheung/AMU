@@ -55,8 +55,8 @@ class DPA() extends Module{
   // dot product
   for(i <- 0 until dim){
     Array(i).io.fire := fire0_r
-    Array(i).io.fp_a := a(i) 
-    Array(i).io.fp_b := b(i) 
+    Array(i).io.fp_a := io.fp_a(i)
+    Array(i).io.fp_b := io.fp_b(i)
     Array(i).io.fp_c := 0.U
     Array(i).io.round_mode := io.round_mode
     Array(i).io.fp_format := io.fp_format
