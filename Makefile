@@ -1,6 +1,6 @@
 include Makefile.softfloat
 
-TOP ?= MatrixSimTop
+TOP ?= SimTop
 BUILD_DIR = ./build
 TOP_V = $(BUILD_DIR)/$(TOP).v
 

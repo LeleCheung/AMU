@@ -1,6 +1,46 @@
 #ifndef __IO_TYPE_H
 #define __IO_TYPE_H
 
+
+#define dim 8
+
+struct MatrixInput{
+  /*
+    val fire                 = Input (Bool()) // valid
+
+    val fp_a, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
+
+    val round_mode           = Input (UInt(3.W)) // rounding mode
+    val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
+    val op_code              = Input (UInt(4.W)) // operation code
+
+    val fp_aIsFpCanonicalNAN = Input(Bool())
+    val fp_bIsFpCanonicalNAN = Input(Bool())
+    val fp_cIsFpCanonicalNAN = Input(Bool())
+  */
+  bool fire;
+  uint64_t fp_a[dim][dim];
+  uint64_t fp_b[dim][dim];
+  uint64_t fp_c[dim][dim];
+  uint8_t round_mode;
+  uint8_t fp_format;
+  uint8_t op_code;
+  bool fp_aIsFpCanonicalNAN;
+  bool fp_bIsFpCanonicalNAN;
+  bool fp_cIsFpCanonicalNAN;
+}
+
+struct MatrixOutput
+{
+  /* 
+    val fp_result            = Output(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // output matrix
+    val fflags               = Output(UInt(5.W)) // exception flags
+  */
+  uint64_t fp_result[dim][dim];
+  uint8_t fflags;
+};
+
+
 struct VecInfo {
   uint8_t vstart; // 0-127
   uint8_t vl; // 0-128

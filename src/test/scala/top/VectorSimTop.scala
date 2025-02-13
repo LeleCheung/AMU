@@ -82,7 +82,7 @@ class SimTopIO extends VPUTestBundle {
   val out = DecoupledIO(Output(new VSTOutputIO))
 }
 
-class SimTop() extends VPUTestModule {
+class VecSimTop() extends VPUTestModule {
   val io = IO(new SimTopIO())
 
   val busy = RegInit(false.B)
@@ -397,8 +397,8 @@ class SimTop() extends VPUTestModule {
 }
 
 
-object SimTop extends App {
+object VecSimTop extends App {
   (new ChiselStage).execute(args, Seq(
-    ChiselGeneratorAnnotation(() => new SimTop()), FirtoolOption("--lowering-options=explicitBitcast")
+    ChiselGeneratorAnnotation(() => new VecSimTop()), FirtoolOption("--lowering-options=explicitBitcast")
   ))
 }
