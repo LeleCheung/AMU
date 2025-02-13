@@ -109,6 +109,8 @@ int Emulator::single_cycle() {
   // clock posedge, assign value
   test_driver.assign_input_raising(dut_ptr);
 
+  // TODO: MATRIX_ASSIGN
+
   #if VM_TRACE == 1
     if (args.enable_waveform) {
       if (args.log_begin <= cycles && cycles <= args.log_end) {
@@ -132,6 +134,9 @@ int Emulator::single_cycle() {
   cycles ++;
   // check result
   int trap_code = test_driver.diff_output_falling(dut_ptr);
+
+  // TODO: MATRIX_DIFF
+
   if (trap_code == STATE_FINISH_OPERATION || trap_code == STATE_BADTRAP) {
     operations += 1;
   }

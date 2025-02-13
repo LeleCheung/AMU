@@ -45,8 +45,11 @@ class SubCore() extends Module{
   val fire0_r = GatedValidRegNext(fire_r) // FMA stage 0
   val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
   val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
-  val fire3_r = GatedValidRegNext(fire2_r) // store partial product
-  val fire4_r = GatedValidRegNext(fire3_r) // store output
+  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
+  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
+  val fire7_r = GatedValidRegNext(fire6_r) // store +c accumulative result
 
   // 2D reg array to store A, B, C
   val a = RegEnable(io.fp_a, fire_r)
@@ -72,7 +75,7 @@ class SubCore() extends Module{
       Array(i)(j).io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
       Array(i)(j).io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
       Array(i)(j).io.fp_cIsFpCanonicalNAN := io.fp_cIsFpCanonicalNAN
-      result_reg_array(i)(j) := RegEnable(Array(i)(j).io.fp_result, fire4_r)
+      result_reg_array(i)(j) := RegEnable(Array(i)(j).io.fp_result, fire7_r)
       io.fflags := Array(i)(j).io.fflags // todo: & all fflags
     }
   }

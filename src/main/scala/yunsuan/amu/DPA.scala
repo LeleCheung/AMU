@@ -44,7 +44,10 @@ class DPA() extends Module{
   val fire0_r = io.fire // FMA stage 0
   val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
   val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
-  val fire3_r = GatedValidRegNext(fire2_r) // store partial product
+  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
+  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
 
   // use Seq.fill(dim) to create a 1D array of FloatFMA: dot product 
   val Array = Seq.fill(dim)(Module(new FloatFMA()))
@@ -64,20 +67,20 @@ class DPA() extends Module{
     Array(i).io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
     Array(i).io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
     Array(i).io.fp_cIsFpCanonicalNAN := io.fp_cIsFpCanonicalNAN
-    PartialProductArray(i) := RegEnable(Array(i).io.fp_result, fire3_r) // TODO: might be wrong?
+    PartialProductArray(i) := RegEnable(Array(i).io.fp_result, fire3_r) 
     io.fflags := Array(i).io.fflags // todo: & all fflags
   }
 
   // Accumulate in an 8-4-2-1 tree
-  val sum4_0 = PartialProductArray(0) + PartialProductArray(1)
-  val sum4_1 = PartialProductArray(2) + PartialProductArray(3)
-  val sum4_2 = PartialProductArray(4) + PartialProductArray(5)
-  val sum4_3 = PartialProductArray(6) + PartialProductArray(7)
+  val sum4_0 = RegEnable(PartialProductArray(0) + PartialProductArray(1), fire4_r)
+  val sum4_1 = RegEnable(PartialProductArray(2) + PartialProductArray(3), fire4_r)
+  val sum4_2 = RegEnable(PartialProductArray(4) + PartialProductArray(5), fire4_r)
+  val sum4_3 = RegEnable(PartialProductArray(6) + PartialProductArray(7), fire4_r)
 
-  val sum2_0 = sum4_0 + sum4_1
-  val sum2_1 = sum4_2 + sum4_3
+  val sum2_0 = RegEnable(sum4_0 + sum4_1, fire5_r)
+  val sum2_1 = RegEnable(sum4_2 + sum4_3, fire5_r)
 
-  val sum1 = sum2_0 + sum2_1
+  val sum1 = RegEnable(sum2_0 + sum2_1, fire6_r)
 
   io.fp_result := sum1
 
