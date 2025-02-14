@@ -11,8 +11,8 @@ import scala.collection.mutable.ListBuffer
 class FloatFMA() extends Module{
 //*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // parameter
-  val exponentWidth : Int = 11 // fp16: 5, fp32: 8, fp64: 11
-  val significandWidth : Int = 53 // fp16: 10+1, fp32: 23+1, fp64: 52+1
+  val exponentWidth : Int = 5 // fp16: 5, fp32: 8, fp64: 11
+  val significandWidth : Int = 11 // fp16: 10+1, fp32: 23+1, fp64: 52+1
   val floatWidth = exponentWidth + significandWidth
 
 //*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -826,14 +826,9 @@ class FloatFMA() extends Module{
 
 
 
-
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BoothEncoder: encode a and b to partial products 
+// 53 isn't parametized, but it's ok
 private[fpu] class BoothEncoderF64F32F16(width : Int = 53, is_addend_expand_1bit : Boolean = true) extends Module{
 
   val addend_seq_width = if (is_addend_expand_1bit) 2*width+1 else 2*width // the width of partial products

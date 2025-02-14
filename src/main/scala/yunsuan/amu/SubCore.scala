@@ -16,8 +16,8 @@ import scala.collection.mutable.ListBuffer
 
 class SubCore() extends Module{
   // parameter
-  val exponentWidth : Int = 11 // fp16: 5, fp32: 8, fp64: 11
-  val significandWidth : Int = 53 // fp16: 10+1, fp32: 23+1, fp64: 52+1
+  val exponentWidth : Int = 5 // fp16: 5, fp32: 8, fp64: 11
+  val significandWidth : Int = 11 // fp16: 10+1, fp32: 23+1, fp64: 52+1
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
@@ -65,10 +65,18 @@ class SubCore() extends Module{
   // input in Array
   for(i <- 0 until dim){
     for(j <- 0 until dim){
+
+      // SubCore only assigns the first element of fp_c as non-zero
+      val fp_c_vec = Wire(Vec(dim, UInt(floatWidth.W)))
+      for (k <- 0 until dim) {
+        fp_c_vec(k) := 0.U
+      }
+      fp_c_vec(0) := c(i)(j)
+
       Array(i)(j).io.fire := fire0_r
       Array(i)(j).io.fp_a := a(i)
       Array(i)(j).io.fp_b := b(j)
-      Array(i)(j).io.fp_c := c(i)(j)
+      Array(i)(j).io.fp_c := fp_c_vec
       Array(i)(j).io.round_mode := io.round_mode
       Array(i)(j).io.fp_format := io.fp_format
       Array(i)(j).io.op_code := io.op_code

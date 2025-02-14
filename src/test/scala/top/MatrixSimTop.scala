@@ -14,8 +14,8 @@ import yunsuan.amu._
 
 class SimTop() extends Module{
   // parameter
-  val exponentWidth : Int = 11 // fp16: 5, fp32: 8, fp64: 11
-  val significandWidth : Int = 53 // fp16: 10+1, fp32: 23+1, fp64: 52+1
+  val exponentWidth : Int = 5 // fp16: 5, fp32: 8, fp64: 11
+  val significandWidth : Int = 11 // fp16: 10+1, fp32: 23+1, fp64: 52+1
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8

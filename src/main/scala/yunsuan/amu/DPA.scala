@@ -1,5 +1,5 @@
 // 8-element DotProductAccumulator
-// C = 0
+// only the first element of fp_c isn't 0
 // Do accumulation in SubCore
 
 package yunsuan.amu
@@ -16,8 +16,8 @@ import scala.collection.mutable.ListBuffer
 
 class DPA() extends Module{
   // parameter
-  val exponentWidth : Int = 11 // fp16: 5, fp32: 8, fp64: 11
-  val significandWidth : Int = 53 // fp16: 10+1, fp32: 23+1, fp64: 52+1
+  val exponentWidth : Int = 5 // fp16: 5, fp32: 8, fp64: 11
+  val significandWidth : Int = 11 // fp16: 10+1, fp32: 23+1, fp64: 52+1
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
@@ -26,7 +26,7 @@ class DPA() extends Module{
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, UInt(floatWidth.W))) // input vector a, b, c (c is 0, will be deleted during synthesis)
+    val fp_a, fp_b, fp_c     = Input(Vec(dim, UInt(floatWidth.W))) // input vector a, b, c (only the first element of fp_c isn't 0)
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -60,7 +60,7 @@ class DPA() extends Module{
     Array(i).io.fire := fire0_r
     Array(i).io.fp_a := io.fp_a(i)
     Array(i).io.fp_b := io.fp_b(i)
-    Array(i).io.fp_c := 0.U
+    Array(i).io.fp_c := io.fp_c(i) // SubCore only assigns the first element of fp_c as non-zero
     Array(i).io.round_mode := io.round_mode
     Array(i).io.fp_format := io.fp_format
     Array(i).io.op_code := io.op_code

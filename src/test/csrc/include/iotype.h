@@ -28,7 +28,7 @@ struct MatrixInput{
   bool fp_aIsFpCanonicalNAN;
   bool fp_bIsFpCanonicalNAN;
   bool fp_cIsFpCanonicalNAN;
-}
+};
 
 struct MatrixOutput
 {
