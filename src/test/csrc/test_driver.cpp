@@ -37,7 +37,7 @@ void TestDriver::set_test_type() {
   */
 
   // set test type as MATRIX
-  printf("Set Test Type as MATRIX\n");
+  printf("MATRIX Set Test Type\n");
 }
 
 void TestDriver::gen_next_test_case() {
@@ -554,6 +554,8 @@ uint64_t TestDriver::rand64() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // dut io check, return fire or not
 bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
+  printf("MATRIX Assign Input Raising\n");
+
   if (!issued) {
     dut_ptr->io_in_valid = true;
     if (dut_ptr->io_in_ready) {
@@ -826,7 +828,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
   bool finish = dut_ptr->io_out_valid;
   if (finish) {
     // save output in dut_output struct
-    printf("MATRIX Finished\n");
+    printf("MATRIX Diff Output Falling\n");
     /*
     dut_output.result[0] = dut_ptr->io_out_bits_result_0;
     dut_output.result[1] = dut_ptr->io_out_bits_result_1;
@@ -912,7 +914,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
 
     // KEY: compare dut_output with expect_output
     if (memcmp(&dut_output, &expect_output, sizeof(dut_output))) {
-      printf("Error, compare failed\n");
+      printf("MATRIX Diff Triggered\n\n");
       display();
       return STATE_BADTRAP;
     } else {
