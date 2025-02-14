@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 
-//                               width of output
+// width of output
 ElementOutput VGMFloatCvt::calculation_e8(ElementInput input) {
   fp_set_rm(input.rm);
   fp_clear_exception();

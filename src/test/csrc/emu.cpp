@@ -100,15 +100,14 @@ Emulator::~Emulator() {
   return;
 }
 
-
+// KEY FUNCTION
 int Emulator::single_cycle() {
 
   dut_ptr->clock = 0;
   dut_ptr->eval();
 
-  // clock posedge, assign value
-  test_driver.assign_input_raising(dut_ptr); // test_driver is for matrix, and vec_test_driver is for vector
-
+  // KEY: clock posedge, assign value
+  test_driver.assign_input_raising(dut_ptr); // modify test_driver for matrix
 
   #if VM_TRACE == 1
     if (args.enable_waveform) {
@@ -133,8 +132,8 @@ int Emulator::single_cycle() {
   cycles ++;
 
 
-  // check result
-  int trap_code = test_driver.diff_output_falling(dut_ptr); // test_driver is for matrix, and vec_test_driver is for vector
+  // KEY: clock negedge, check output
+  int trap_code = test_driver.diff_output_falling(dut_ptr); // modify test_driver for matrix
 
 
   if (trap_code == STATE_FINISH_OPERATION || trap_code == STATE_BADTRAP) {

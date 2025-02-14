@@ -12,48 +12,66 @@ import yunsuan.scalar.FPCVT
 
 import yunsuan.amu._
 
-class SimTop() extends Module{
+
+trait MatrixParameter {
   // CAUTION: change fp_format for fp16/fp32/fp64
   val exponentWidth : Int = 11 // fp16, fp32, fp64 are all 11
   val significandWidth : Int = 53 // fp16, fp32, fp64 are all 53
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
+}
 
+class MatrixBundle extends Bundle with MatrixParameter
+
+class MatrixInputIO extends MatrixBundle {
+  val fire                 = Bool() // valid
+
+  val fp_a, fp_b, fp_c     = Vec(dim, Vec(dim, UInt(floatWidth.W))) // input matrix a, b, c 
+
+  val round_mode           = UInt(3.W) // rounding mode
+  val fp_format            = UInt(2.W) // result format: b01->fp16,b10->fp32,b11->fp64
+  val op_code              = UInt(4.W) // operation code
+
+  val fp_aIsFpCanonicalNAN = Bool()
+  val fp_bIsFpCanonicalNAN = Bool()
+  val fp_cIsFpCanonicalNAN = Bool()
+}
+
+class MatrixOutputIO extends MatrixBundle {
+  val fp_result            = Vec(dim, Vec(dim, UInt(floatWidth.W))) // output matrix
+  val fflags               = UInt(5.W) // exception flags
+}
+
+class MatrixSimTopIO extends MatrixBundle {
+  val in = Flipped(DecoupledIO(Output(new MatrixInputIO)))
+  val out = DecoupledIO(Output(new MatrixOutputIO))
+}
+
+class SimTop() extends Module{
   // IO  
-  val io = IO(new Bundle() {
-    val fire                 = Input (Bool()) // valid
-
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
-
-    val round_mode           = Input (UInt(3.W)) // rounding mode
-    val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
-    val op_code              = Input (UInt(4.W)) // operation code
-
-    val fp_aIsFpCanonicalNAN = Input(Bool())
-    val fp_bIsFpCanonicalNAN = Input(Bool())
-    val fp_cIsFpCanonicalNAN = Input(Bool())
-
-    val fp_result            = Output(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // output matrix
-    val fflags               = Output(UInt(5.W)) // exception flags
-  })
+  val io = IO(new MatrixSimTopIO())
 
   // instantiate 1 SubCore
   val AMU = Module(new AMU())
 
   // connect IO
-  AMU.io.fire := io.fire
-  AMU.io.fp_a := io.fp_a
-  AMU.io.fp_b := io.fp_b
-  AMU.io.fp_c := io.fp_c
-  AMU.io.round_mode := io.round_mode
-  AMU.io.fp_format := io.fp_format
-  AMU.io.op_code := io.op_code
-  AMU.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
-  AMU.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
-  AMU.io.fp_cIsFpCanonicalNAN := io.fp_cIsFpCanonicalNAN
-  io.fp_result := AMU.io.fp_result
-  io.fflags := AMU.io.fflags
+  AMU.io.fire := io.in.bits.fire
+  AMU.io.fp_a := io.in.bits.fp_a
+  AMU.io.fp_b := io.in.bits.fp_b
+  AMU.io.fp_c := io.in.bits.fp_c
+  AMU.io.round_mode := io.in.bits.round_mode
+  AMU.io.fp_format := io.in.bits.fp_format
+  AMU.io.op_code := io.in.bits.op_code
+  AMU.io.fp_aIsFpCanonicalNAN := io.in.bits.fp_aIsFpCanonicalNAN
+  AMU.io.fp_bIsFpCanonicalNAN := io.in.bits.fp_bIsFpCanonicalNAN
+  AMU.io.fp_cIsFpCanonicalNAN := io.in.bits.fp_cIsFpCanonicalNAN
+  io.out.bits.fp_result := AMU.io.fp_result
+  io.out.bits.fflags := AMU.io.fflags
+
+  // TODO: valid & ready
+  io.in.ready := true.B
+  io.out.valid := true.B
 
 }
 

@@ -10,6 +10,7 @@ extern "C" {
 #include "include/vpu_constant.h"
 #include "include/test_driver.h"
 
+// KEY: call these functions when new a TestDriver
 TestDriver::TestDriver():
   issued(false), verbose(false), keepinput(false)
 {
@@ -515,7 +516,8 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
 int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
   bool finish = dut_ptr->io_out_valid;
   if (finish) {
-    // printf("Finished\n");
+    // save output in dut_output struct
+    printf("Finished\n");
     dut_output.result[0] = dut_ptr->io_out_bits_result_0;
     dut_output.result[1] = dut_ptr->io_out_bits_result_1;
     dut_output.fflags[0] = dut_ptr->io_out_bits_fflags_0;

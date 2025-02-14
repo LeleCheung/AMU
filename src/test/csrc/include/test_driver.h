@@ -29,9 +29,10 @@ struct TestType {
 
 class TestDriver {
 private:
-  VecInput input;
-  VecOutput expect_output;
-  VecOutput dut_output;
+  MatrixInput input; // VecInput input;
+  MatrixOutput expect_output; // VecOutput expect_output;
+  MatrixOutput dut_output; // VecOutput dut_output;
+
   TestType test_type;
   bool issued;
 
@@ -88,25 +89,5 @@ public:
   }
   void keep_input() { keepinput = true; }
 };
-
-/*
-class MatrixTestDriver {
-  private:
-    MatrixInput input;
-    MatrixOutput expect_output;
-  
-  public:
-    TestDriver();
-    ~TestDriver();
-  
-    void get_random_input();
-    void get_expected_output();
-    uint64_t rand64();
-    // dut io check, return fire or not
-    bool assign_input_raising(VSimTop *dut_ptr);
-    int diff_output_falling(VSimTop *dut_ptr);
-
-  };
-*/
 
 #endif
