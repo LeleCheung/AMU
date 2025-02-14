@@ -489,6 +489,22 @@ void TestDriver::get_random_input() {
   input.fp_bIsFpCanonicalNAN = rand() % 2;
   input.fp_cIsFpCanonicalNAN = rand() % 2;
 
+  // print
+  printf("fire: %d\n", input.fire);
+  printf("round_mode: %d\n", input.round_mode);
+  printf("fp_format: %d\n", input.fp_format);
+  printf("op_code: %d\n", input.op_code);
+  printf("fp_aIsFpCanonicalNAN: %d\n", input.fp_aIsFpCanonicalNAN);
+  printf("fp_bIsFpCanonicalNAN: %d\n", input.fp_bIsFpCanonicalNAN);
+  printf("fp_cIsFpCanonicalNAN: %d\n", input.fp_cIsFpCanonicalNAN);
+  for (int i = 0; i < dim; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("fp_a[%d][%d]: %lu\n", i, j, input.fp_a[i][j]);
+      printf("fp_b[%d][%d]: %lu\n", i, j, input.fp_b[i][j]);
+      printf("fp_c[%d][%d]: %lu\n", i, j, input.fp_c[i][j]);
+    }
+  }
+
 }
 
 void TestDriver::get_expected_output() {
@@ -541,6 +557,14 @@ void TestDriver::get_expected_output() {
     }
   }
   expect_output.fflags = rand() % 16;
+
+  // print
+  printf("fflags: %d\n", expect_output.fflags);
+  for (int i = 0; i < dim; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("fp_result[%d][%d]: %lu\n", i, j, expect_output.fp_result[i][j]);
+    }
+  }
 }
 
 
@@ -936,22 +960,41 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TestDriver::display_ref_input() {
   printf("REF Input:\n");
-  printf("TODO!!! \n");
   // printf("  src1 %016lx_%016lx src2 %016lx_%016lx src3 %016lx_%016lx src4 %016lx_%016lx\n", input.src1[1], input.src1[0], input.src2[1], input.src2[0], input.src3[1], input.src3[0], input.src4[1], input.src4[0]);
   // printf("  fuType %x fuOpType %x sew %x uop_idx %d src_widen %d widen %d is_frs1 %d rm %d\n", input.fuType, input.fuOpType, input.sew, input.uop_idx, input.src_widen, input.widen, input.is_frs1, input.rm);
   // printf("  vstart %d vl %d vlmul %x vm %d ta %d ma %d\n", input.vinfo.vstart, input.vinfo.vl, input.vinfo.vlmul, input.vinfo.vm, input.vinfo.ta, input.vinfo.ma);
+  printf("  fire %d round_mode %d fp_format %d op_code %d\n", input.fire, input.round_mode, input.fp_format, input.op_code);
+  printf("  fp_aIsFpCanonicalNAN %d fp_bIsFpCanonicalNAN %d fp_cIsFpCanonicalNAN %d\n", input.fp_aIsFpCanonicalNAN, input.fp_bIsFpCanonicalNAN, input.fp_cIsFpCanonicalNAN);
+  printf("  fp_a: \n");
+  for (int i = 0; i < dim; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("fp_a[%d][%d]: %lu\n", i, j, input.fp_a[i][j]);
+    }
+  }
 }
 
 void TestDriver::display_ref_output() {
   printf("Expected Output \n");
-  printf("TODO!!! \n");
   // printf("  result  %016lx_%016lx fflags: %x_%x  vxsat: %lx\n", expect_output.result[1], expect_output.result[0], expect_output.fflags[1], expect_output.fflags[0], expect_output.vxsat);
+  printf("  fflags: %d\n", expect_output.fflags);
+  printf("  fp_result: \n");
+  for (int i = 0; i < dim; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("fp_result[%d][%d]: %lu\n", i, j, expect_output.fp_result[i][j]);
+    }
+  }
 }
 
 void TestDriver::display_dut() {
   printf("DUT Output:\n");
-  printf("TODO!!! \n");
   // printf("  result  %016lx_%016lx fflags: %x_%x  vxsat: %lx\n", dut_output.result[1], dut_output.result[0], dut_output.fflags[1], dut_output.fflags[0], dut_output.vxsat);
+  printf("  fflags: %d\n", dut_output.fflags);
+  printf("  fp_result: \n");
+  for (int i = 0; i < dim; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("fp_result[%d][%d]: %lu\n", i, j, dut_output.fp_result[i][j]);
+    }
+  }
 }
 
 void TestDriver::display() {
