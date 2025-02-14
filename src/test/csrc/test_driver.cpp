@@ -835,7 +835,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.vxsat = dut_ptr->io_out_bits_vxsat;
     */
 
-    dut_output.io_out_bits_fflags = dut_ptr->io_out_bits_fflags;
+    dut_output.fflags           = dut_ptr->io_out_bits_fflags;
 
     dut_output.fp_result[0][0]  = dut_ptr->io_out_bits_fp_result_0_0;  
     dut_output.fp_result[0][1]  = dut_ptr->io_out_bits_fp_result_0_1;
