@@ -181,6 +181,7 @@ void Emulator::reset_ncycles(size_t cycle) {
     #endif
     cycles++;
   }
+  printf("Reset=0\n");
   dut_ptr->reset = 0;
 }
 
@@ -213,7 +214,7 @@ bool Emulator::execute() {
   printf("EMU %s\n", good_trap ? "EXCEEDED LIMIT" : "BADTRAP");
   printf("HAS Executed Cycles:%ld Operations:%ld\n", cycles, operations);
   if (!good_trap) {
-    printf("=========Re-Execute, Print Golden Model Trace and Dump Wave===========\n");
+    printf("\n\n=========Re-Execute, Print Golden Model Trace and Dump Wave===========\n");
 
 #if VM_TRACE == 1
     args.log_begin = 0; args.log_end = -1;

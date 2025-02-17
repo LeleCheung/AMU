@@ -8,6 +8,7 @@ This repo includes XiangShan's matrix unit AMU.
 * `make emu [EMU_TRACE=1]`
 * `./build/emu [-C MAX_CYCLES] [-O MAX_OPERATIONS] [--dump-wave] [-b begin_dump] [-e end_dump]`
 * CAUTION: `--dump-wave` is a must if `EMU_TRACE=1` is set, otherwise coredump will occur.
+* Re-execute wave is better.
 
 Others:
 
