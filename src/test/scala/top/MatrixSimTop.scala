@@ -69,9 +69,20 @@ class SimTop() extends Module{
   io.out.bits.fp_result := AMU.io.fp_result
   io.out.bits.fflags := AMU.io.fflags
 
+  // pipeline fire signal
+  val fire_r = io.in.bits.fire // store input
+  val fire0_r = GatedValidRegNext(fire_r) // FMA stage 0
+  val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
+  val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
+  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
+  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
+  val fire7_r = GatedValidRegNext(fire6_r) // store +c accumulative result
+
   // TODO: valid & ready
   io.in.ready := true.B
-  io.out.valid := true.B
+  io.out.valid := GatedValidRegNext(fire7_r)
 
 }
 
