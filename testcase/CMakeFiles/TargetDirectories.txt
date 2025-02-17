@@ -1,3 +1,0 @@
-/nfs/home/zhanghanle/RACE/AMU/testcase/CMakeFiles/testcase.dir
-/nfs/home/zhanghanle/RACE/AMU/testcase/CMakeFiles/edit_cache.dir
-/nfs/home/zhanghanle/RACE/AMU/testcase/CMakeFiles/rebuild_cache.dir

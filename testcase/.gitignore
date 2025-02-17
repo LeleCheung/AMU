@@ -1,2 +1,6 @@
 libtorch-shared-with-deps-latest.zip
 libtorch/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+testcase
