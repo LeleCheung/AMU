@@ -33,9 +33,10 @@ int main() {
 
         for (int x = 0; x < DIM; x++) {
             for (int y = 0; y < DIM; y++) {
-                double randomValue = dis(gen);
-                fp_a[x][y] = randomValue;
-                fp_b[x][y] = randomValue;
+                double randomValueA = dis(gen);
+                double randomValueB = dis(gen);
+                fp_a[x][y] = randomValueA;
+                fp_b[x][y] = randomValueB;
             }
         }
 
