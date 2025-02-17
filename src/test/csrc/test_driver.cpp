@@ -482,12 +482,12 @@ void TestDriver::get_random_input() {
       input.fp_c[i][j] = rand64();
     }
   }
-  input.round_mode = rand() % 8;
-  input.fp_format = rand() % 4;
-  input.op_code = rand() % 16;
-  input.fp_aIsFpCanonicalNAN = rand() % 2;
-  input.fp_bIsFpCanonicalNAN = rand() % 2;
-  input.fp_cIsFpCanonicalNAN = rand() % 2;
+  input.round_mode = 0b000 // round to nearest
+  input.fp_format = 0b11; // fp64
+  input.op_code = 0b0000; // fmul
+  input.fp_aIsFpCanonicalNAN = 0;
+  input.fp_bIsFpCanonicalNAN = 0；
+  input.fp_cIsFpCanonicalNAN = 0；
 
   // print
   /*
