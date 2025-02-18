@@ -24,8 +24,9 @@ TestDriver::~TestDriver() {
 
 void TestDriver::set_default_value(VSimTop *dut_ptr) {
   dut_ptr->io_in_valid = false;
-  dut_ptr->io_out_ready = true;
+  dut_ptr->io_out_ready = true; // test_driver always ready for output, AMU valid after calculation done
 }
+
 // fix set_test_type to select fuType
 void TestDriver::set_test_type() {
   /*
@@ -556,16 +557,17 @@ uint64_t TestDriver::rand64() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // dut io check, return fire or not
 bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
-  printf("MATRIX Assign Input Raising\n");
 
+  // make sure input handshake success only last for 1 cycle
   if (!issued) {
     printf("MATRIX Assign Input Raising Not Issued\n");
     dut_ptr->io_in_valid = true;
     if (dut_ptr->io_in_ready) {
-      issued = true;
+      issued = true; // handshake success
       stuck_count = 0;
     }
   } else {
+    printf("MATRIX Assign Input Raising Issued\n");
     dut_ptr->io_in_valid = false;
   }
 

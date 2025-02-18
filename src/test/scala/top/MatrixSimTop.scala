@@ -81,8 +81,8 @@ class SimTop() extends Module{
   val fire7_r = GatedValidRegNext(fire6_r) // store +c accumulative result
 
   // TODO: valid & ready
-  io.in.ready := true.B
-  io.out.valid := GatedValidRegNext(fire7_r)
+  io.in.ready := true.B // always ready, no stall in AMU pipeline
+  io.out.valid := GatedValidRegNext(fire7_r) // valid 1 cycle after fire7_r
 
 }
 
