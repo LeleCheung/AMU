@@ -1,20 +1,17 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <cstring>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
 
 #define DIM 8
 #define NUM 3
 
-double fp64ToFloat(const std::string& fp64Hex) {
-    uint64_t packed;
-    std::stringstream ss;
-    ss << std::hex << fp64Hex;
-    ss >> packed;
+// Convert hexadecimal string to double
+double fp64ToFloat(const char* fp64Hex) {
+    uint64_t packed = 0;
+    sscanf(fp64Hex, "%lx", &packed); // Read the hexadecimal string
 
     double value;
-    std::memcpy(&value, &packed, sizeof(double));
+    memcpy(&value, &packed, sizeof(double)); // Copy memory to convert
     return value;
 }
 
@@ -23,60 +20,71 @@ int main() {
     float array_b[DIM][DIM];
     float array_r[DIM][DIM];
 
-    std::ifstream file_read("testcase.txt");
-    std::string line;
-
-    for (int i = 0; i < NUM; i++) {
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::string fp64Hex;
-                file_read >> fp64Hex;
-                array_a[x][y] = fp64ToFloat(fp64Hex);
-            }
-            file_read.ignore(); // Ignore the newline
-        }
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::string fp64Hex;
-                file_read >> fp64Hex;
-                array_b[x][y] = fp64ToFloat(fp64Hex);
-            }
-            file_read.ignore(); // Ignore the newline
-        }
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::string fp64Hex;
-                file_read >> fp64Hex;
-                array_r[x][y] = fp64ToFloat(fp64Hex);
-            }
-            file_read.ignore(); // Ignore the newline
-        }
-        file_read.ignore(); // Ignore the extra newline
-
-        std::cout << "************************* Test case " << i + 1 << " *************************" << std::endl;
-        std::cout << "Tensor A: " << std::endl;
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::cout << array_a[x][y] << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "Tensor B: " << std::endl;
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::cout << array_b[x][y] << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "Tensor R: " << std::endl;
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
-                std::cout << array_r[x][y] << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
+    // Open the input file for reading
+    FILE* file_read = fopen("testcase.txt", "r");
+    if (!file_read) {
+        perror("Unable to open file"); // Error handling
+        return 1;
     }
 
+    char fp64Hex[17]; // 16 characters + 1 for null terminator
+
+    for (int i = 0; i < NUM; i++) {
+        // Read Tensor A
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                fscanf(file_read, "%s", fp64Hex); // Read hex string
+                array_a[x][y] = fp64ToFloat(fp64Hex); // Convert to float
+            }
+        }
+        fgetc(file_read); // Ignore newline
+
+        // Read Tensor B
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                fscanf(file_read, "%s", fp64Hex); // Read hex string
+                array_b[x][y] = fp64ToFloat(fp64Hex); // Convert to float
+            }
+        }
+        fgetc(file_read); // Ignore newline
+
+        // Read Tensor R
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                fscanf(file_read, "%s", fp64Hex); // Read hex string
+                array_r[x][y] = fp64ToFloat(fp64Hex); // Convert to float
+            }
+        }
+        fgetc(file_read); // Ignore newline
+
+        // Print the test case results
+        printf("************************* Test case %d *************************\n", i + 1);
+        printf("Tensor A:\n");
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                printf("%f ", array_a[x][y]); // Print elements of Tensor A
+            }
+            printf("\n");
+        }
+
+        printf("Tensor B:\n");
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                printf("%f ", array_b[x][y]); // Print elements of Tensor B
+            }
+            printf("\n");
+        }
+
+        printf("Tensor R:\n");
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM; y++) {
+                printf("%f ", array_r[x][y]); // Print elements of Tensor R
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+
+    fclose(file_read); // Close the file
     return 0;
 }
