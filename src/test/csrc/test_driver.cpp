@@ -921,7 +921,10 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
 }
 
 int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
-  bool finish = dut_ptr->io_out_valid;
+  bool finish = dut_ptr->io_out_valid & !(dut_ptr->reset);
+  printf("dut_ptr->io_out_valid: %d\n", dut_ptr->io_out_valid);
+  printf("dut_ptr->reset: %d\n", dut_ptr->reset);
+  printf("finish: %d\n", finish);
   if (finish) {
     // save output in dut_output struct
     printf("MATRIX Diff Output Falling\n");

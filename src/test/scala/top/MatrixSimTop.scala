@@ -81,7 +81,7 @@ class SimTop() extends Module{
 
   // TODO: valid & ready
   io.in.ready := true.B // always ready, no stall in AMU pipeline
-  io.out.valid := GatedValidRegNext(fire6_r) // valid 1 cycle after fire6_r
+  io.out.valid := GatedValidRegNext(GatedValidRegNext(fire6_r)) // output valid 
 
 }
 

@@ -95,7 +95,7 @@ Emulator::Emulator(int argc, const char *argv[]):
   printf("test_driver: set default value\n");
   test_driver.set_default_value(dut_ptr);
   printf("emu: reset_ncycles\n");
-  reset_ncycles(10);
+  reset_ncycles(5);
 }
 
 Emulator::~Emulator() {
@@ -111,9 +111,14 @@ int Emulator::single_cycle() {
   // KEY: clock posedge, assign value
   test_driver.assign_input_raising(dut_ptr); // modify test_driver for matrix
 
+  printf("args.enable_waveform: %d\n", args.enable_waveform);
+  printf("args.log_begin: %ld, cycles: %ld, args.log_end: %ld\n", args.log_begin, cycles, args.log_end);
+  printf("cycles: %ld\n", cycles);
+
   #if VM_TRACE == 1
     if (args.enable_waveform) {
       if (args.log_begin <= cycles && cycles <= args.log_end) {
+        printf("Single Dumping cycle %ld\n", cycles);
         tfp->dump(cycles);
       }
     }
@@ -127,6 +132,7 @@ int Emulator::single_cycle() {
   #if VM_TRACE == 1
     if (args.enable_waveform) {
       if (args.log_begin <= cycles && cycles <= args.log_end) {
+        printf("Single Dumping cycle %ld\n", cycles);
         tfp->dump(cycles);
       }
     }
@@ -150,6 +156,7 @@ void Emulator::dummy_single_cycle() {
   #if VM_TRACE == 1
     if (args.enable_waveform) {
       if (args.log_begin <= cycles && cycles <= args.log_end) {
+        printf("Dummy Dumping cycle %ld\n", cycles);
         tfp->dump(cycles);
       }
     }
@@ -160,6 +167,7 @@ void Emulator::dummy_single_cycle() {
   #if VM_TRACE == 1
     if (args.enable_waveform) {
       if (args.log_begin <= cycles && cycles <= args.log_end) {
+        printf("Dummy Dumping cycle %ld\n", cycles);
         tfp->dump(cycles);
       }
     }
@@ -173,17 +181,19 @@ void Emulator::reset_ncycles(size_t cycle) {
     dut_ptr->clock = 0;
     dut_ptr->eval();
     #if VM_TRACE == 1
+      printf("Reset Dumping cycle %ld\n", cycles);
       tfp->dump(cycles);
     #endif
     cycles++;
     dut_ptr->clock = 1;
     dut_ptr->eval();
     #if VM_TRACE == 1
+      printf("Reset Dumping cycle %ld\n", cycles);
       tfp->dump(cycles);
     #endif
     cycles++;
   }
-  printf("Reset=0\n");
+  printf("Reset = 0\n");
   dut_ptr->reset = 0;
 }
 
@@ -198,8 +208,11 @@ int Emulator::execute_operations(uint64_t ops) {
 }
 
 bool Emulator::execute() {
+  args.log_begin = 0; args.log_end = -1;
   int trap_code;
+  printf("cycles: %ld, args.max_cycles: %ld, operations: %ld, args.max_operations: %ld\n", cycles, args.max_cycles, operations, args.max_operations);
   while ((cycles < args.max_cycles) && (operations < args.max_operations)) {
+    printf("execute for cycles: %ld, operations: %ld\n", cycles, operations);
     trap_code = single_cycle();
     if ((trap_code != STATE_RUNNING) && (trap_code != STATE_FINISH_OPERATION)) {
       // after bad trap, dump more 10 cycles
