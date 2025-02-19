@@ -49,7 +49,6 @@ class SubCore() extends Module{
   val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
   val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
   val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
-  val fire7_r = GatedValidRegNext(fire6_r) // store +c accumulative result
 
   // 2D reg array to store A, B, C
   val a = RegEnable(io.fp_a, fire_r)
@@ -60,7 +59,7 @@ class SubCore() extends Module{
   val Array = Seq.fill(dim, dim)(Module(new DPA()))
 
   // use a 2D reg array to store the output
-  val result_reg_array = Reg(Vec(dim, Vec(dim, UInt(floatWidth.W))))
+  // val result_reg_array = Reg(Vec(dim, Vec(dim, UInt(floatWidth.W))))
 
   // input in Array
   for(i <- 0 until dim){
@@ -88,10 +87,8 @@ class SubCore() extends Module{
       Array(i)(j).io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
       Array(i)(j).io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
       Array(i)(j).io.fp_cIsFpCanonicalNAN := io.fp_cIsFpCanonicalNAN
-      result_reg_array(i)(j) := RegEnable(Array(i)(j).io.fp_result, fire7_r)
+      io.fp_result(i)(j) := Array(i)(j).io.fp_result
       io.fflags := Array(i)(j).io.fflags // todo: & all fflags
     }
   }
-  
-  io.fp_result := result_reg_array
 }

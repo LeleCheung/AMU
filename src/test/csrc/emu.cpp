@@ -92,7 +92,9 @@ Emulator::Emulator(int argc, const char *argv[]):
   }
 #endif
   
+  printf("test_driver: set default value\n");
   test_driver.set_default_value(dut_ptr);
+  printf("emu: reset_ncycles\n");
   reset_ncycles(10);
 }
 
