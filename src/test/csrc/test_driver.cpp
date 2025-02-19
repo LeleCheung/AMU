@@ -26,6 +26,13 @@ double fp64ToFloat(const char* fp64Hex) {
   return value;
 }
 
+uint64_t fp64ToUint64(const char* fp64Hex) {
+  uint64_t packed = 0;
+  sscanf(fp64Hex, "%lx", &packed); // Read the hexadecimal string
+
+  return packed;
+}
+
 
 // KEY: call these functions when new a TestDriver
 TestDriver::TestDriver():
@@ -61,9 +68,9 @@ void TestDriver::set_test_type() {
 void TestDriver::gen_next_test_case() {
   issued = false;
   get_random_input();
-  if (verbose) { display_ref_input(); }
+  // (verbose) { display_ref_input(); }
   get_expected_output();
-  if (verbose) { display_ref_output(); }
+  // (verbose) { display_ref_output(); }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -492,15 +499,10 @@ void TestDriver::get_random_input() {
   bool fp_bIsFpCanonicalNAN;
   bool fp_cIsFpCanonicalNAN;  
   */
-  input.fire = true;
-  for (int i = 0; i < dim; i++) {
-    for (int j = 0; j < dim; j++) {
-      input.fp_a[i][j] = rand64();
-      input.fp_b[i][j] = rand64();
-      input.fp_c[i][j] = rand64();
-    }
-  }
 
+
+
+  input.fire = true;
   input.round_mode = 0b000; // round to nearest
   input.fp_format = 0b11; // fp64
   input.op_code = 0b0000; // fmul
@@ -508,10 +510,6 @@ void TestDriver::get_random_input() {
   input.fp_bIsFpCanonicalNAN = 0;
   input.fp_cIsFpCanonicalNAN = 0;
 
-
-  float array_a[DIM][DIM];
-  float array_b[DIM][DIM];
-  float array_r[DIM][DIM];
 
   // Open the input file for reading
   FILE* file_read = fopen("./testcase/testcase.txt", "r");
@@ -524,61 +522,68 @@ void TestDriver::get_random_input() {
 
   char fp64Hex[17]; // 16 characters + 1 for null terminator
 
-  for (int i = 0; i < NUM; i++) {
-      // Read Tensor A
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              fscanf(file_read, "%s", fp64Hex); // Read hex string
-              array_a[x][y] = fp64ToFloat(fp64Hex); // Convert to float
-          }
-      }
-      fgetc(file_read); // Ignore newline
+  int i = 0; // Test case number
 
-      // Read Tensor B
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              fscanf(file_read, "%s", fp64Hex); // Read hex string
-              array_b[x][y] = fp64ToFloat(fp64Hex); // Convert to float
-          }
+  // Read Tensor A
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          fscanf(file_read, "%s", fp64Hex); // Read hex string
+          input.fp_a[x][y] = fp64ToUint64(fp64Hex);
       }
-      fgetc(file_read); // Ignore newline
+  }
+  fgetc(file_read); // Ignore newline
 
-      // Read Tensor R
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              fscanf(file_read, "%s", fp64Hex); // Read hex string
-              array_r[x][y] = fp64ToFloat(fp64Hex); // Convert to float
-          }
+  // Read Tensor B
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          fscanf(file_read, "%s", fp64Hex); // Read hex string
+          input.fp_b[x][y] = fp64ToUint64(fp64Hex);
       }
-      fgetc(file_read); // Ignore newline
+  }
+  fgetc(file_read); // Ignore newline
 
-      // Print the test case results
-      printf("************************* Test case %d *************************\n", i + 1);
-      printf("Tensor A:\n");
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              printf("%f ", array_a[x][y]); // Print elements of Tensor A
-          }
-          printf("\n");
+  // Set Tensor C to 0
+  for (int x = 0; x < DIM; x++) {
+    for (int y = 0; y < DIM; y++) {
+      input.fp_c[x][y] = 0;
+    }
+  }
+
+  // Read Tensor R
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          fscanf(file_read, "%s", fp64Hex); // Read hex string
+          expect_output.fp_result[x][y] = fp64ToUint64(fp64Hex);
       }
+  }
+  fgetc(file_read); // Ignore newline
 
-      printf("Tensor B:\n");
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              printf("%f ", array_b[x][y]); // Print elements of Tensor B
-          }
-          printf("\n");
-      }
-
-      printf("Tensor R:\n");
-      for (int x = 0; x < DIM; x++) {
-          for (int y = 0; y < DIM; y++) {
-              printf("%f ", array_r[x][y]); // Print elements of Tensor R
-          }
-          printf("\n");
+  // Print the test case results
+  printf("************************* Test case %d *************************\n", i + 1);
+  printf("Tensor A:\n");
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          printf("%lx ", input.fp_a[x][y]); // Print elements of Tensor A
       }
       printf("\n");
   }
+
+  printf("Tensor B:\n");
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          printf("%lx ", input.fp_b[x][y]); // Print elements of Tensor B
+      }
+      printf("\n");
+  }
+
+  printf("Tensor R:\n");
+  for (int x = 0; x < DIM; x++) {
+      for (int y = 0; y < DIM; y++) {
+          printf("%lx ", expect_output.fp_result[x][y]); // Print elements of Tensor R
+      }
+      printf("\n");
+  }
+  printf("\n");
 
   fclose(file_read); // Close the file
 
@@ -628,11 +633,8 @@ void TestDriver::get_expected_output() {
   uint64_t fp_result[dim][dim];
   uint8_t fflags;  
   */
-  for (int i = 0; i < dim; i++) {
-    for (int j = 0; j < dim; j++) {
-      expect_output.fp_result[i][j] = rand64();
-    }
-  }
+
+  // expect_output.fp_result is in get_random_input()
   expect_output.fflags = 0;
 
 }
@@ -1040,21 +1042,21 @@ void TestDriver::display_ref_input() {
   printf("  fp_a: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lu ", input.fp_a[i][j]);
+      printf("%lx ", input.fp_a[i][j]);
     }
     printf("\n");
   }
   printf("  fp_b: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lu ", input.fp_b[i][j]);
+      printf("%lx ", input.fp_b[i][j]);
     }
     printf("\n");
   }
   printf("  fp_c: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lu ", input.fp_c[i][j]);
+      printf("%lx ", input.fp_c[i][j]);
     }
     printf("\n");
   }
@@ -1068,7 +1070,7 @@ void TestDriver::display_ref_output() {
   printf("  fp_result: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lu ", expect_output.fp_result[i][j]);
+      printf("%lx ", expect_output.fp_result[i][j]);
     }
     printf("\n");
   }
@@ -1082,7 +1084,7 @@ void TestDriver::display_dut() {
   printf("  fp_result: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lu ", dut_output.fp_result[i][j]);
+      printf("%lx ", dut_output.fp_result[i][j]);
     }
     printf("\n");
   }
