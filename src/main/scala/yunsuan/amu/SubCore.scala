@@ -73,9 +73,14 @@ class SubCore() extends Module{
       }
       fp_c_vec(0) := c(i)(j)
 
+      val fp_b_vec = Wire(Vec(dim, UInt(floatWidth.W)))
+      for (k <- 0 until dim) {
+        fp_b_vec(k) := b(k)(j)
+      }
+
       Array(i)(j).io.fire := fire0_r
       Array(i)(j).io.fp_a := a(i)
-      Array(i)(j).io.fp_b := b(j)
+      Array(i)(j).io.fp_b := fp_b_vec
       Array(i)(j).io.fp_c := fp_c_vec
       Array(i)(j).io.round_mode := io.round_mode
       Array(i)(j).io.fp_format := io.fp_format
