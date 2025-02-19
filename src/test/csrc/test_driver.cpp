@@ -16,11 +16,7 @@ extern "C" {
 #define DIM 8
 #define NUM 3
 
-// Convert hexadecimal string to double
-double fp64ToFloat(const char* fp64Hex) {
-  uint64_t packed = 0;
-  sscanf(fp64Hex, "%lx", &packed); // Read the hexadecimal string
-
+double Uint64ToFloat(uint64_t packed) {
   double value;
   memcpy(&value, &packed, sizeof(double)); // Copy memory to convert
   return value;
@@ -559,6 +555,8 @@ void TestDriver::get_random_input() {
   fgetc(file_read); // Ignore newline
 
   // Print the test case results
+
+  /*
   printf("************************* Test case %d *************************\n", i + 1);
   printf("Tensor A:\n");
   for (int x = 0; x < DIM; x++) {
@@ -584,6 +582,7 @@ void TestDriver::get_random_input() {
       printf("\n");
   }
   printf("\n");
+  */
 
   fclose(file_read); // Close the file
 
@@ -1011,7 +1010,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
 
     // KEY: compare dut_output with expect_output
     if (memcmp(&dut_output, &expect_output, sizeof(dut_output))) {
-      printf("MATRIX Diff Triggered\n\n");
+      printf("\nMATRIX Diff Triggered\n\n");
       display();
       return STATE_BADTRAP;
     } else {
@@ -1021,7 +1020,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
   } else {
     stuck_count ++;
     if (stuck_count >= stuck_limit) {
-      printf("DUT stucked. Not finished in %lu cycles\n", stuck_limit);
+      printf("\nDUT stucked. Not finished in %lu cycles\n", stuck_limit);
       stuck_count = 0;
       return STATE_BADTRAP;
     }
@@ -1032,7 +1031,7 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TestDriver::display_ref_input() {
-  printf("REF Input:\n");
+  printf("\nREF Input:\n");
   // printf("  src1 %016lx_%016lx src2 %016lx_%016lx src3 %016lx_%016lx src4 %016lx_%016lx\n", input.src1[1], input.src1[0], input.src2[1], input.src2[0], input.src3[1], input.src3[0], input.src4[1], input.src4[0]);
   // printf("  fuType %x fuOpType %x sew %x uop_idx %d src_widen %d widen %d is_frs1 %d rm %d\n", input.fuType, input.fuOpType, input.sew, input.uop_idx, input.src_widen, input.widen, input.is_frs1, input.rm);
   // printf("  vstart %d vl %d vlmul %x vm %d ta %d ma %d\n", input.vinfo.vstart, input.vinfo.vl, input.vinfo.vlmul, input.vinfo.vm, input.vinfo.ta, input.vinfo.ma);
@@ -1042,49 +1041,50 @@ void TestDriver::display_ref_input() {
   printf("  fp_a: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lx ", input.fp_a[i][j]);
+      printf("%f ", Uint64ToFloat(input.fp_a[i][j]));
     }
     printf("\n");
   }
   printf("  fp_b: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lx ", input.fp_b[i][j]);
+      printf("%f ", Uint64ToFloat(input.fp_b[i][j]));
     }
     printf("\n");
   }
   printf("  fp_c: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lx ", input.fp_c[i][j]);
+      printf("%f ", Uint64ToFloat(input.fp_c[i][j]));
     }
     printf("\n");
   }
 }
 
 void TestDriver::display_ref_output() {
-  printf("Expected Output \n");
+  printf("\nExpected Output \n");
   // printf("  result  %016lx_%016lx fflags: %x_%x  vxsat: %lx\n", expect_output.result[1], expect_output.result[0], expect_output.fflags[1], expect_output.fflags[0], expect_output.vxsat);
   
   printf("  fflags: %d\n", expect_output.fflags);
   printf("  fp_result: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lx ", expect_output.fp_result[i][j]);
+      printf("%f ", Uint64ToFloat(expect_output.fp_result[i][j]));
     }
     printf("\n");
   }
 }
 
 void TestDriver::display_dut() {
-  printf("DUT Output:\n");
+  printf("\nDUT Output:\n");
   // printf("  result  %016lx_%016lx fflags: %x_%x  vxsat: %lx\n", dut_output.result[1], dut_output.result[0], dut_output.fflags[1], dut_output.fflags[0], dut_output.vxsat);
   
   printf("  fflags: %d\n", dut_output.fflags);
   printf("  fp_result: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%lx ", dut_output.fp_result[i][j]);
+      // printf("%lx ", dut_output.fp_result[i][j]);
+      printf("%f ", Uint64ToFloat(dut_output.fp_result[i][j]));
     }
     printf("\n");
   }
