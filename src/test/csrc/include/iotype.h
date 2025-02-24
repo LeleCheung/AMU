@@ -2,7 +2,7 @@
 #define __IO_TYPE_H
 
 
-#define dim 8
+#define dim 16
 #define dim_k 4
 
 struct MatrixInput{

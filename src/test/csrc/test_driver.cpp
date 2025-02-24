@@ -13,7 +13,7 @@ extern "C" {
 
 #include <string.h>
 
-#define DIM 8
+#define DIM 16
 #define DIM_K 4
 #define NUM 3
 
@@ -740,6 +740,46 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_a_7_2 = input.fp_a[7][2];
   dut_ptr->io_in_bits_fp_a_7_3 = input.fp_a[7][3];
 
+  dut_ptr->io_in_bits_fp_a_8_0 = input.fp_a[8][0];
+  dut_ptr->io_in_bits_fp_a_8_1 = input.fp_a[8][1];
+  dut_ptr->io_in_bits_fp_a_8_2 = input.fp_a[8][2];
+  dut_ptr->io_in_bits_fp_a_8_3 = input.fp_a[8][3];
+
+  dut_ptr->io_in_bits_fp_a_9_0 = input.fp_a[9][0];
+  dut_ptr->io_in_bits_fp_a_9_1 = input.fp_a[9][1];
+  dut_ptr->io_in_bits_fp_a_9_2 = input.fp_a[9][2];
+  dut_ptr->io_in_bits_fp_a_9_3 = input.fp_a[9][3];
+
+  dut_ptr->io_in_bits_fp_a_10_0 = input.fp_a[10][0];
+  dut_ptr->io_in_bits_fp_a_10_1 = input.fp_a[10][1];
+  dut_ptr->io_in_bits_fp_a_10_2 = input.fp_a[10][2];
+  dut_ptr->io_in_bits_fp_a_10_3 = input.fp_a[10][3];
+
+  dut_ptr->io_in_bits_fp_a_11_0 = input.fp_a[11][0];
+  dut_ptr->io_in_bits_fp_a_11_1 = input.fp_a[11][1];
+  dut_ptr->io_in_bits_fp_a_11_2 = input.fp_a[11][2];
+  dut_ptr->io_in_bits_fp_a_11_3 = input.fp_a[11][3];
+
+  dut_ptr->io_in_bits_fp_a_12_0 = input.fp_a[12][0];
+  dut_ptr->io_in_bits_fp_a_12_1 = input.fp_a[12][1];
+  dut_ptr->io_in_bits_fp_a_12_2 = input.fp_a[12][2];
+  dut_ptr->io_in_bits_fp_a_12_3 = input.fp_a[12][3];
+
+  dut_ptr->io_in_bits_fp_a_13_0 = input.fp_a[13][0];
+  dut_ptr->io_in_bits_fp_a_13_1 = input.fp_a[13][1];
+  dut_ptr->io_in_bits_fp_a_13_2 = input.fp_a[13][2];
+  dut_ptr->io_in_bits_fp_a_13_3 = input.fp_a[13][3];
+
+  dut_ptr->io_in_bits_fp_a_14_0 = input.fp_a[14][0];
+  dut_ptr->io_in_bits_fp_a_14_1 = input.fp_a[14][1];
+  dut_ptr->io_in_bits_fp_a_14_2 = input.fp_a[14][2];
+  dut_ptr->io_in_bits_fp_a_14_3 = input.fp_a[14][3];
+
+  dut_ptr->io_in_bits_fp_a_15_0 = input.fp_a[15][0];
+  dut_ptr->io_in_bits_fp_a_15_1 = input.fp_a[15][1];
+  dut_ptr->io_in_bits_fp_a_15_2 = input.fp_a[15][2];
+  dut_ptr->io_in_bits_fp_a_15_3 = input.fp_a[15][3];
+
   // fp_b assignments
   dut_ptr->io_in_bits_fp_b_0_0 = input.fp_b[0][0];
   dut_ptr->io_in_bits_fp_b_0_1 = input.fp_b[0][1];
@@ -749,6 +789,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_b_0_5 = input.fp_b[0][5];
   dut_ptr->io_in_bits_fp_b_0_6 = input.fp_b[0][6];
   dut_ptr->io_in_bits_fp_b_0_7 = input.fp_b[0][7];
+  dut_ptr->io_in_bits_fp_b_0_8 = input.fp_b[0][8];
+  dut_ptr->io_in_bits_fp_b_0_9 = input.fp_b[0][9];
+  dut_ptr->io_in_bits_fp_b_0_10 = input.fp_b[0][10];
+  dut_ptr->io_in_bits_fp_b_0_11 = input.fp_b[0][11];
+  dut_ptr->io_in_bits_fp_b_0_12 = input.fp_b[0][12];
+  dut_ptr->io_in_bits_fp_b_0_13 = input.fp_b[0][13];
+  dut_ptr->io_in_bits_fp_b_0_14 = input.fp_b[0][14];
+  dut_ptr->io_in_bits_fp_b_0_15 = input.fp_b[0][15];
 
   dut_ptr->io_in_bits_fp_b_1_0 = input.fp_b[1][0];
   dut_ptr->io_in_bits_fp_b_1_1 = input.fp_b[1][1];
@@ -758,6 +806,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_b_1_5 = input.fp_b[1][5];
   dut_ptr->io_in_bits_fp_b_1_6 = input.fp_b[1][6];
   dut_ptr->io_in_bits_fp_b_1_7 = input.fp_b[1][7];
+  dut_ptr->io_in_bits_fp_b_1_8 = input.fp_b[1][8];
+  dut_ptr->io_in_bits_fp_b_1_9 = input.fp_b[1][9];
+  dut_ptr->io_in_bits_fp_b_1_10 = input.fp_b[1][10];
+  dut_ptr->io_in_bits_fp_b_1_11 = input.fp_b[1][11];
+  dut_ptr->io_in_bits_fp_b_1_12 = input.fp_b[1][12];
+  dut_ptr->io_in_bits_fp_b_1_13 = input.fp_b[1][13];
+  dut_ptr->io_in_bits_fp_b_1_14 = input.fp_b[1][14];
+  dut_ptr->io_in_bits_fp_b_1_15 = input.fp_b[1][15];
 
   dut_ptr->io_in_bits_fp_b_2_0 = input.fp_b[2][0];
   dut_ptr->io_in_bits_fp_b_2_1 = input.fp_b[2][1];
@@ -767,6 +823,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_b_2_5 = input.fp_b[2][5];
   dut_ptr->io_in_bits_fp_b_2_6 = input.fp_b[2][6];
   dut_ptr->io_in_bits_fp_b_2_7 = input.fp_b[2][7];
+  dut_ptr->io_in_bits_fp_b_2_8 = input.fp_b[2][8];
+  dut_ptr->io_in_bits_fp_b_2_9 = input.fp_b[2][9];
+  dut_ptr->io_in_bits_fp_b_2_10 = input.fp_b[2][10];
+  dut_ptr->io_in_bits_fp_b_2_11 = input.fp_b[2][11];
+  dut_ptr->io_in_bits_fp_b_2_12 = input.fp_b[2][12];
+  dut_ptr->io_in_bits_fp_b_2_13 = input.fp_b[2][13];
+  dut_ptr->io_in_bits_fp_b_2_14 = input.fp_b[2][14];
+  dut_ptr->io_in_bits_fp_b_2_15 = input.fp_b[2][15];
 
   dut_ptr->io_in_bits_fp_b_3_0 = input.fp_b[3][0];
   dut_ptr->io_in_bits_fp_b_3_1 = input.fp_b[3][1];
@@ -776,6 +840,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_b_3_5 = input.fp_b[3][5];
   dut_ptr->io_in_bits_fp_b_3_6 = input.fp_b[3][6];
   dut_ptr->io_in_bits_fp_b_3_7 = input.fp_b[3][7];
+  dut_ptr->io_in_bits_fp_b_3_8 = input.fp_b[3][8];
+  dut_ptr->io_in_bits_fp_b_3_9 = input.fp_b[3][9];
+  dut_ptr->io_in_bits_fp_b_3_10 = input.fp_b[3][10];
+  dut_ptr->io_in_bits_fp_b_3_11 = input.fp_b[3][11];
+  dut_ptr->io_in_bits_fp_b_3_12 = input.fp_b[3][12];
+  dut_ptr->io_in_bits_fp_b_3_13 = input.fp_b[3][13];
+  dut_ptr->io_in_bits_fp_b_3_14 = input.fp_b[3][14];
+  dut_ptr->io_in_bits_fp_b_3_15 = input.fp_b[3][15];
 
   // fp_c assignments
   dut_ptr->io_in_bits_fp_c_0_0 = input.fp_c[0][0];
@@ -786,6 +858,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_0_5 = input.fp_c[0][5];
   dut_ptr->io_in_bits_fp_c_0_6 = input.fp_c[0][6];
   dut_ptr->io_in_bits_fp_c_0_7 = input.fp_c[0][7];
+  dut_ptr->io_in_bits_fp_c_0_8 = input.fp_c[0][8];
+  dut_ptr->io_in_bits_fp_c_0_9 = input.fp_c[0][9];
+  dut_ptr->io_in_bits_fp_c_0_10 = input.fp_c[0][10];
+  dut_ptr->io_in_bits_fp_c_0_11 = input.fp_c[0][11];
+  dut_ptr->io_in_bits_fp_c_0_12 = input.fp_c[0][12];
+  dut_ptr->io_in_bits_fp_c_0_13 = input.fp_c[0][13];
+  dut_ptr->io_in_bits_fp_c_0_14 = input.fp_c[0][14];
+  dut_ptr->io_in_bits_fp_c_0_15 = input.fp_c[0][15];
 
   dut_ptr->io_in_bits_fp_c_1_0 = input.fp_c[1][0];
   dut_ptr->io_in_bits_fp_c_1_1 = input.fp_c[1][1];
@@ -795,6 +875,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_1_5 = input.fp_c[1][5];
   dut_ptr->io_in_bits_fp_c_1_6 = input.fp_c[1][6];
   dut_ptr->io_in_bits_fp_c_1_7 = input.fp_c[1][7];
+  dut_ptr->io_in_bits_fp_c_1_8 = input.fp_c[1][8];
+  dut_ptr->io_in_bits_fp_c_1_9 = input.fp_c[1][9];
+  dut_ptr->io_in_bits_fp_c_1_10 = input.fp_c[1][10];
+  dut_ptr->io_in_bits_fp_c_1_11 = input.fp_c[1][11];
+  dut_ptr->io_in_bits_fp_c_1_12 = input.fp_c[1][12];
+  dut_ptr->io_in_bits_fp_c_1_13 = input.fp_c[1][13];
+  dut_ptr->io_in_bits_fp_c_1_14 = input.fp_c[1][14];
+  dut_ptr->io_in_bits_fp_c_1_15 = input.fp_c[1][15];
 
   dut_ptr->io_in_bits_fp_c_2_0 = input.fp_c[2][0];
   dut_ptr->io_in_bits_fp_c_2_1 = input.fp_c[2][1];
@@ -804,6 +892,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_2_5 = input.fp_c[2][5];
   dut_ptr->io_in_bits_fp_c_2_6 = input.fp_c[2][6];
   dut_ptr->io_in_bits_fp_c_2_7 = input.fp_c[2][7];
+  dut_ptr->io_in_bits_fp_c_2_8 = input.fp_c[2][8];
+  dut_ptr->io_in_bits_fp_c_2_9 = input.fp_c[2][9];
+  dut_ptr->io_in_bits_fp_c_2_10 = input.fp_c[2][10];
+  dut_ptr->io_in_bits_fp_c_2_11 = input.fp_c[2][11];
+  dut_ptr->io_in_bits_fp_c_2_12 = input.fp_c[2][12];
+  dut_ptr->io_in_bits_fp_c_2_13 = input.fp_c[2][13];
+  dut_ptr->io_in_bits_fp_c_2_14 = input.fp_c[2][14];
+  dut_ptr->io_in_bits_fp_c_2_15 = input.fp_c[2][15];
 
   dut_ptr->io_in_bits_fp_c_3_0 = input.fp_c[3][0];
   dut_ptr->io_in_bits_fp_c_3_1 = input.fp_c[3][1];
@@ -813,6 +909,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_3_5 = input.fp_c[3][5];
   dut_ptr->io_in_bits_fp_c_3_6 = input.fp_c[3][6];
   dut_ptr->io_in_bits_fp_c_3_7 = input.fp_c[3][7];
+  dut_ptr->io_in_bits_fp_c_3_8 = input.fp_c[3][8];
+  dut_ptr->io_in_bits_fp_c_3_9 = input.fp_c[3][9];
+  dut_ptr->io_in_bits_fp_c_3_10 = input.fp_c[3][10];
+  dut_ptr->io_in_bits_fp_c_3_11 = input.fp_c[3][11];
+  dut_ptr->io_in_bits_fp_c_3_12 = input.fp_c[3][12];
+  dut_ptr->io_in_bits_fp_c_3_13 = input.fp_c[3][13];
+  dut_ptr->io_in_bits_fp_c_3_14 = input.fp_c[3][14];
+  dut_ptr->io_in_bits_fp_c_3_15 = input.fp_c[3][15];
 
   dut_ptr->io_in_bits_fp_c_4_0 = input.fp_c[4][0];
   dut_ptr->io_in_bits_fp_c_4_1 = input.fp_c[4][1];
@@ -822,6 +926,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_4_5 = input.fp_c[4][5];
   dut_ptr->io_in_bits_fp_c_4_6 = input.fp_c[4][6];
   dut_ptr->io_in_bits_fp_c_4_7 = input.fp_c[4][7];
+  dut_ptr->io_in_bits_fp_c_4_8 = input.fp_c[4][8];
+  dut_ptr->io_in_bits_fp_c_4_9 = input.fp_c[4][9];
+  dut_ptr->io_in_bits_fp_c_4_10 = input.fp_c[4][10];
+  dut_ptr->io_in_bits_fp_c_4_11 = input.fp_c[4][11];
+  dut_ptr->io_in_bits_fp_c_4_12 = input.fp_c[4][12];
+  dut_ptr->io_in_bits_fp_c_4_13 = input.fp_c[4][13];
+  dut_ptr->io_in_bits_fp_c_4_14 = input.fp_c[4][14];
+  dut_ptr->io_in_bits_fp_c_4_15 = input.fp_c[4][15];
 
   dut_ptr->io_in_bits_fp_c_5_0 = input.fp_c[5][0];
   dut_ptr->io_in_bits_fp_c_5_1 = input.fp_c[5][1];
@@ -831,6 +943,14 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_5_5 = input.fp_c[5][5];
   dut_ptr->io_in_bits_fp_c_5_6 = input.fp_c[5][6];
   dut_ptr->io_in_bits_fp_c_5_7 = input.fp_c[5][7];
+  dut_ptr->io_in_bits_fp_c_5_8 = input.fp_c[5][8];
+  dut_ptr->io_in_bits_fp_c_5_9 = input.fp_c[5][9];
+  dut_ptr->io_in_bits_fp_c_5_10 = input.fp_c[5][10];
+  dut_ptr->io_in_bits_fp_c_5_11 = input.fp_c[5][11];
+  dut_ptr->io_in_bits_fp_c_5_12 = input.fp_c[5][12];
+  dut_ptr->io_in_bits_fp_c_5_13 = input.fp_c[5][13];
+  dut_ptr->io_in_bits_fp_c_5_14 = input.fp_c[5][14];
+  dut_ptr->io_in_bits_fp_c_5_15 = input.fp_c[5][15];
 
   dut_ptr->io_in_bits_fp_c_6_0 = input.fp_c[6][0];
   dut_ptr->io_in_bits_fp_c_6_1 = input.fp_c[6][1];
@@ -840,7 +960,15 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_6_5 = input.fp_c[6][5];
   dut_ptr->io_in_bits_fp_c_6_6 = input.fp_c[6][6];
   dut_ptr->io_in_bits_fp_c_6_7 = input.fp_c[6][7];
-  
+  dut_ptr->io_in_bits_fp_c_6_8 = input.fp_c[6][8];
+  dut_ptr->io_in_bits_fp_c_6_9 = input.fp_c[6][9];
+  dut_ptr->io_in_bits_fp_c_6_10 = input.fp_c[6][10];
+  dut_ptr->io_in_bits_fp_c_6_11 = input.fp_c[6][11];
+  dut_ptr->io_in_bits_fp_c_6_12 = input.fp_c[6][12];
+  dut_ptr->io_in_bits_fp_c_6_13 = input.fp_c[6][13];
+  dut_ptr->io_in_bits_fp_c_6_14 = input.fp_c[6][14];
+  dut_ptr->io_in_bits_fp_c_6_15 = input.fp_c[6][15];
+
   dut_ptr->io_in_bits_fp_c_7_0 = input.fp_c[7][0];
   dut_ptr->io_in_bits_fp_c_7_1 = input.fp_c[7][1];
   dut_ptr->io_in_bits_fp_c_7_2 = input.fp_c[7][2];
@@ -849,6 +977,150 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_c_7_5 = input.fp_c[7][5];
   dut_ptr->io_in_bits_fp_c_7_6 = input.fp_c[7][6];
   dut_ptr->io_in_bits_fp_c_7_7 = input.fp_c[7][7];
+  dut_ptr->io_in_bits_fp_c_7_8 = input.fp_c[7][8];
+  dut_ptr->io_in_bits_fp_c_7_9 = input.fp_c[7][9];
+  dut_ptr->io_in_bits_fp_c_7_10 = input.fp_c[7][10];
+  dut_ptr->io_in_bits_fp_c_7_11 = input.fp_c[7][11];
+  dut_ptr->io_in_bits_fp_c_7_12 = input.fp_c[7][12];
+  dut_ptr->io_in_bits_fp_c_7_13 = input.fp_c[7][13];
+  dut_ptr->io_in_bits_fp_c_7_14 = input.fp_c[7][14];
+  dut_ptr->io_in_bits_fp_c_7_15 = input.fp_c[7][15];
+
+  dut_ptr->io_in_bits_fp_c_8_0 = input.fp_c[8][0];
+  dut_ptr->io_in_bits_fp_c_8_1 = input.fp_c[8][1];
+  dut_ptr->io_in_bits_fp_c_8_2 = input.fp_c[8][2];
+  dut_ptr->io_in_bits_fp_c_8_3 = input.fp_c[8][3];
+  dut_ptr->io_in_bits_fp_c_8_4 = input.fp_c[8][4];
+  dut_ptr->io_in_bits_fp_c_8_5 = input.fp_c[8][5];
+  dut_ptr->io_in_bits_fp_c_8_6 = input.fp_c[8][6];
+  dut_ptr->io_in_bits_fp_c_8_7 = input.fp_c[8][7];
+  dut_ptr->io_in_bits_fp_c_8_8 = input.fp_c[8][8];
+  dut_ptr->io_in_bits_fp_c_8_9 = input.fp_c[8][9];
+  dut_ptr->io_in_bits_fp_c_8_10 = input.fp_c[8][10];
+  dut_ptr->io_in_bits_fp_c_8_11 = input.fp_c[8][11];
+  dut_ptr->io_in_bits_fp_c_8_12 = input.fp_c[8][12];
+  dut_ptr->io_in_bits_fp_c_8_13 = input.fp_c[8][13];
+  dut_ptr->io_in_bits_fp_c_8_14 = input.fp_c[8][14];
+  dut_ptr->io_in_bits_fp_c_8_15 = input.fp_c[8][15];
+
+  dut_ptr->io_in_bits_fp_c_9_0 = input.fp_c[9][0];
+  dut_ptr->io_in_bits_fp_c_9_1 = input.fp_c[9][1];
+  dut_ptr->io_in_bits_fp_c_9_2 = input.fp_c[9][2];
+  dut_ptr->io_in_bits_fp_c_9_3 = input.fp_c[9][3];
+  dut_ptr->io_in_bits_fp_c_9_4 = input.fp_c[9][4];
+  dut_ptr->io_in_bits_fp_c_9_5 = input.fp_c[9][5];
+  dut_ptr->io_in_bits_fp_c_9_6 = input.fp_c[9][6];
+  dut_ptr->io_in_bits_fp_c_9_7 = input.fp_c[9][7];
+  dut_ptr->io_in_bits_fp_c_9_8 = input.fp_c[9][8];
+  dut_ptr->io_in_bits_fp_c_9_9 = input.fp_c[9][9];
+  dut_ptr->io_in_bits_fp_c_9_10 = input.fp_c[9][10];
+  dut_ptr->io_in_bits_fp_c_9_11 = input.fp_c[9][11];
+  dut_ptr->io_in_bits_fp_c_9_12 = input.fp_c[9][12];
+  dut_ptr->io_in_bits_fp_c_9_13 = input.fp_c[9][13];
+  dut_ptr->io_in_bits_fp_c_9_14 = input.fp_c[9][14];
+  dut_ptr->io_in_bits_fp_c_9_15 = input.fp_c[9][15];
+
+  dut_ptr->io_in_bits_fp_c_10_0 = input.fp_c[10][0];
+  dut_ptr->io_in_bits_fp_c_10_1 = input.fp_c[10][1];
+  dut_ptr->io_in_bits_fp_c_10_2 = input.fp_c[10][2];
+  dut_ptr->io_in_bits_fp_c_10_3 = input.fp_c[10][3];
+  dut_ptr->io_in_bits_fp_c_10_4 = input.fp_c[10][4];
+  dut_ptr->io_in_bits_fp_c_10_5 = input.fp_c[10][5];
+  dut_ptr->io_in_bits_fp_c_10_6 = input.fp_c[10][6];
+  dut_ptr->io_in_bits_fp_c_10_7 = input.fp_c[10][7];
+  dut_ptr->io_in_bits_fp_c_10_8 = input.fp_c[10][8];
+  dut_ptr->io_in_bits_fp_c_10_9 = input.fp_c[10][9];
+  dut_ptr->io_in_bits_fp_c_10_10 = input.fp_c[10][10];
+  dut_ptr->io_in_bits_fp_c_10_11 = input.fp_c[10][11];
+  dut_ptr->io_in_bits_fp_c_10_12 = input.fp_c[10][12];
+  dut_ptr->io_in_bits_fp_c_10_13 = input.fp_c[10][13];
+  dut_ptr->io_in_bits_fp_c_10_14 = input.fp_c[10][14];
+  dut_ptr->io_in_bits_fp_c_10_15 = input.fp_c[10][15];
+
+  dut_ptr->io_in_bits_fp_c_11_0 = input.fp_c[11][0];
+  dut_ptr->io_in_bits_fp_c_11_1 = input.fp_c[11][1];
+  dut_ptr->io_in_bits_fp_c_11_2 = input.fp_c[11][2];
+  dut_ptr->io_in_bits_fp_c_11_3 = input.fp_c[11][3];
+  dut_ptr->io_in_bits_fp_c_11_4 = input.fp_c[11][4];
+  dut_ptr->io_in_bits_fp_c_11_5 = input.fp_c[11][5];
+  dut_ptr->io_in_bits_fp_c_11_6 = input.fp_c[11][6];
+  dut_ptr->io_in_bits_fp_c_11_7 = input.fp_c[11][7];
+  dut_ptr->io_in_bits_fp_c_11_8 = input.fp_c[11][8];
+  dut_ptr->io_in_bits_fp_c_11_9 = input.fp_c[11][9];
+  dut_ptr->io_in_bits_fp_c_11_10 = input.fp_c[11][10];
+  dut_ptr->io_in_bits_fp_c_11_11 = input.fp_c[11][11];
+  dut_ptr->io_in_bits_fp_c_11_12 = input.fp_c[11][12];
+  dut_ptr->io_in_bits_fp_c_11_13 = input.fp_c[11][13];
+  dut_ptr->io_in_bits_fp_c_11_14 = input.fp_c[11][14];
+  dut_ptr->io_in_bits_fp_c_11_15 = input.fp_c[11][15];
+
+  dut_ptr->io_in_bits_fp_c_12_0 = input.fp_c[12][0];
+  dut_ptr->io_in_bits_fp_c_12_1 = input.fp_c[12][1];
+  dut_ptr->io_in_bits_fp_c_12_2 = input.fp_c[12][2];
+  dut_ptr->io_in_bits_fp_c_12_3 = input.fp_c[12][3];
+  dut_ptr->io_in_bits_fp_c_12_4 = input.fp_c[12][4];
+  dut_ptr->io_in_bits_fp_c_12_5 = input.fp_c[12][5];
+  dut_ptr->io_in_bits_fp_c_12_6 = input.fp_c[12][6];
+  dut_ptr->io_in_bits_fp_c_12_7 = input.fp_c[12][7];
+  dut_ptr->io_in_bits_fp_c_12_8 = input.fp_c[12][8];
+  dut_ptr->io_in_bits_fp_c_12_9 = input.fp_c[12][9];
+  dut_ptr->io_in_bits_fp_c_12_10 = input.fp_c[12][10];
+  dut_ptr->io_in_bits_fp_c_12_11 = input.fp_c[12][11];
+  dut_ptr->io_in_bits_fp_c_12_12 = input.fp_c[12][12];
+  dut_ptr->io_in_bits_fp_c_12_13 = input.fp_c[12][13];
+  dut_ptr->io_in_bits_fp_c_12_14 = input.fp_c[12][14];
+  dut_ptr->io_in_bits_fp_c_12_15 = input.fp_c[12][15];
+
+  dut_ptr->io_in_bits_fp_c_13_0 = input.fp_c[13][0];
+  dut_ptr->io_in_bits_fp_c_13_1 = input.fp_c[13][1];
+  dut_ptr->io_in_bits_fp_c_13_2 = input.fp_c[13][2];
+  dut_ptr->io_in_bits_fp_c_13_3 = input.fp_c[13][3];
+  dut_ptr->io_in_bits_fp_c_13_4 = input.fp_c[13][4];
+  dut_ptr->io_in_bits_fp_c_13_5 = input.fp_c[13][5];
+  dut_ptr->io_in_bits_fp_c_13_6 = input.fp_c[13][6];
+  dut_ptr->io_in_bits_fp_c_13_7 = input.fp_c[13][7];
+  dut_ptr->io_in_bits_fp_c_13_8 = input.fp_c[13][8];
+  dut_ptr->io_in_bits_fp_c_13_9 = input.fp_c[13][9];
+  dut_ptr->io_in_bits_fp_c_13_10 = input.fp_c[13][10];
+  dut_ptr->io_in_bits_fp_c_13_11 = input.fp_c[13][11];
+  dut_ptr->io_in_bits_fp_c_13_12 = input.fp_c[13][12];
+  dut_ptr->io_in_bits_fp_c_13_13 = input.fp_c[13][13];
+  dut_ptr->io_in_bits_fp_c_13_14 = input.fp_c[13][14];
+  dut_ptr->io_in_bits_fp_c_13_15 = input.fp_c[13][15];
+
+  dut_ptr->io_in_bits_fp_c_14_0 = input.fp_c[14][0];
+  dut_ptr->io_in_bits_fp_c_14_1 = input.fp_c[14][1];
+  dut_ptr->io_in_bits_fp_c_14_2 = input.fp_c[14][2];
+  dut_ptr->io_in_bits_fp_c_14_3 = input.fp_c[14][3];
+  dut_ptr->io_in_bits_fp_c_14_4 = input.fp_c[14][4];
+  dut_ptr->io_in_bits_fp_c_14_5 = input.fp_c[14][5];
+  dut_ptr->io_in_bits_fp_c_14_6 = input.fp_c[14][6];
+  dut_ptr->io_in_bits_fp_c_14_7 = input.fp_c[14][7];
+  dut_ptr->io_in_bits_fp_c_14_8 = input.fp_c[14][8];
+  dut_ptr->io_in_bits_fp_c_14_9 = input.fp_c[14][9];
+  dut_ptr->io_in_bits_fp_c_14_10 = input.fp_c[14][10];
+  dut_ptr->io_in_bits_fp_c_14_11 = input.fp_c[14][11];
+  dut_ptr->io_in_bits_fp_c_14_12 = input.fp_c[14][12];
+  dut_ptr->io_in_bits_fp_c_14_13 = input.fp_c[14][13];
+  dut_ptr->io_in_bits_fp_c_14_14 = input.fp_c[14][14];
+  dut_ptr->io_in_bits_fp_c_14_15 = input.fp_c[14][15];
+
+  dut_ptr->io_in_bits_fp_c_15_0 = input.fp_c[15][0];
+  dut_ptr->io_in_bits_fp_c_15_1 = input.fp_c[15][1];
+  dut_ptr->io_in_bits_fp_c_15_2 = input.fp_c[15][2];
+  dut_ptr->io_in_bits_fp_c_15_3 = input.fp_c[15][3];
+  dut_ptr->io_in_bits_fp_c_15_4 = input.fp_c[15][4];
+  dut_ptr->io_in_bits_fp_c_15_5 = input.fp_c[15][5];
+  dut_ptr->io_in_bits_fp_c_15_6 = input.fp_c[15][6];
+  dut_ptr->io_in_bits_fp_c_15_7 = input.fp_c[15][7];
+  dut_ptr->io_in_bits_fp_c_15_8 = input.fp_c[15][8];
+  dut_ptr->io_in_bits_fp_c_15_9 = input.fp_c[15][9];
+  dut_ptr->io_in_bits_fp_c_15_10 = input.fp_c[15][10];
+  dut_ptr->io_in_bits_fp_c_15_11 = input.fp_c[15][11];
+  dut_ptr->io_in_bits_fp_c_15_12 = input.fp_c[15][12];
+  dut_ptr->io_in_bits_fp_c_15_13 = input.fp_c[15][13];
+  dut_ptr->io_in_bits_fp_c_15_14 = input.fp_c[15][14];
+  dut_ptr->io_in_bits_fp_c_15_15 = input.fp_c[15][15];
 
   return  dut_ptr->io_in_valid;
 }
@@ -879,6 +1151,14 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[0][5]  = dut_ptr->io_out_bits_fp_result_0_5;
     dut_output.fp_result[0][6]  = dut_ptr->io_out_bits_fp_result_0_6;
     dut_output.fp_result[0][7]  = dut_ptr->io_out_bits_fp_result_0_7;
+    dut_output.fp_result[0][8]  = dut_ptr->io_out_bits_fp_result_0_8;
+    dut_output.fp_result[0][9]  = dut_ptr->io_out_bits_fp_result_0_9;
+    dut_output.fp_result[0][10] = dut_ptr->io_out_bits_fp_result_0_10;
+    dut_output.fp_result[0][11] = dut_ptr->io_out_bits_fp_result_0_11;
+    dut_output.fp_result[0][12] = dut_ptr->io_out_bits_fp_result_0_12;
+    dut_output.fp_result[0][13] = dut_ptr->io_out_bits_fp_result_0_13;
+    dut_output.fp_result[0][14] = dut_ptr->io_out_bits_fp_result_0_14;
+    dut_output.fp_result[0][15] = dut_ptr->io_out_bits_fp_result_0_15;
   
     dut_output.fp_result[1][0]  = dut_ptr->io_out_bits_fp_result_1_0;
     dut_output.fp_result[1][1]  = dut_ptr->io_out_bits_fp_result_1_1;
@@ -888,7 +1168,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[1][5]  = dut_ptr->io_out_bits_fp_result_1_5;
     dut_output.fp_result[1][6]  = dut_ptr->io_out_bits_fp_result_1_6;
     dut_output.fp_result[1][7]  = dut_ptr->io_out_bits_fp_result_1_7;
-  
+    dut_output.fp_result[1][8]  = dut_ptr->io_out_bits_fp_result_1_8;
+    dut_output.fp_result[1][9]  = dut_ptr->io_out_bits_fp_result_1_9;
+    dut_output.fp_result[1][10] = dut_ptr->io_out_bits_fp_result_1_10;
+    dut_output.fp_result[1][11] = dut_ptr->io_out_bits_fp_result_1_11;
+    dut_output.fp_result[1][12] = dut_ptr->io_out_bits_fp_result_1_12;
+    dut_output.fp_result[1][13] = dut_ptr->io_out_bits_fp_result_1_13;
+    dut_output.fp_result[1][14] = dut_ptr->io_out_bits_fp_result_1_14;
+    dut_output.fp_result[1][15] = dut_ptr->io_out_bits_fp_result_1_15;
+
     dut_output.fp_result[2][0]  = dut_ptr->io_out_bits_fp_result_2_0;
     dut_output.fp_result[2][1]  = dut_ptr->io_out_bits_fp_result_2_1;
     dut_output.fp_result[2][2]  = dut_ptr->io_out_bits_fp_result_2_2;
@@ -897,7 +1185,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[2][5]  = dut_ptr->io_out_bits_fp_result_2_5;
     dut_output.fp_result[2][6]  = dut_ptr->io_out_bits_fp_result_2_6;
     dut_output.fp_result[2][7]  = dut_ptr->io_out_bits_fp_result_2_7;
-  
+    dut_output.fp_result[2][8]  = dut_ptr->io_out_bits_fp_result_2_8;
+    dut_output.fp_result[2][9]  = dut_ptr->io_out_bits_fp_result_2_9;
+    dut_output.fp_result[2][10] = dut_ptr->io_out_bits_fp_result_2_10;
+    dut_output.fp_result[2][11] = dut_ptr->io_out_bits_fp_result_2_11;
+    dut_output.fp_result[2][12] = dut_ptr->io_out_bits_fp_result_2_12;
+    dut_output.fp_result[2][13] = dut_ptr->io_out_bits_fp_result_2_13;
+    dut_output.fp_result[2][14] = dut_ptr->io_out_bits_fp_result_2_14;
+    dut_output.fp_result[2][15] = dut_ptr->io_out_bits_fp_result_2_15;
+
     dut_output.fp_result[3][0]  = dut_ptr->io_out_bits_fp_result_3_0;
     dut_output.fp_result[3][1]  = dut_ptr->io_out_bits_fp_result_3_1;
     dut_output.fp_result[3][2]  = dut_ptr->io_out_bits_fp_result_3_2;
@@ -906,7 +1202,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[3][5]  = dut_ptr->io_out_bits_fp_result_3_5;
     dut_output.fp_result[3][6]  = dut_ptr->io_out_bits_fp_result_3_6;
     dut_output.fp_result[3][7]  = dut_ptr->io_out_bits_fp_result_3_7;
-  
+    dut_output.fp_result[3][8]  = dut_ptr->io_out_bits_fp_result_3_8;
+    dut_output.fp_result[3][9]  = dut_ptr->io_out_bits_fp_result_3_9;
+    dut_output.fp_result[3][10] = dut_ptr->io_out_bits_fp_result_3_10;
+    dut_output.fp_result[3][11] = dut_ptr->io_out_bits_fp_result_3_11;
+    dut_output.fp_result[3][12] = dut_ptr->io_out_bits_fp_result_3_12;
+    dut_output.fp_result[3][13] = dut_ptr->io_out_bits_fp_result_3_13;
+    dut_output.fp_result[3][14] = dut_ptr->io_out_bits_fp_result_3_14;
+    dut_output.fp_result[3][15] = dut_ptr->io_out_bits_fp_result_3_15;
+
     dut_output.fp_result[4][0]  = dut_ptr->io_out_bits_fp_result_4_0;
     dut_output.fp_result[4][1]  = dut_ptr->io_out_bits_fp_result_4_1;
     dut_output.fp_result[4][2]  = dut_ptr->io_out_bits_fp_result_4_2;
@@ -915,7 +1219,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[4][5]  = dut_ptr->io_out_bits_fp_result_4_5;
     dut_output.fp_result[4][6]  = dut_ptr->io_out_bits_fp_result_4_6;
     dut_output.fp_result[4][7]  = dut_ptr->io_out_bits_fp_result_4_7;
-  
+    dut_output.fp_result[4][8]  = dut_ptr->io_out_bits_fp_result_4_8;
+    dut_output.fp_result[4][9]  = dut_ptr->io_out_bits_fp_result_4_9;
+    dut_output.fp_result[4][10] = dut_ptr->io_out_bits_fp_result_4_10;
+    dut_output.fp_result[4][11] = dut_ptr->io_out_bits_fp_result_4_11;
+    dut_output.fp_result[4][12] = dut_ptr->io_out_bits_fp_result_4_12;
+    dut_output.fp_result[4][13] = dut_ptr->io_out_bits_fp_result_4_13;
+    dut_output.fp_result[4][14] = dut_ptr->io_out_bits_fp_result_4_14;
+    dut_output.fp_result[4][15] = dut_ptr->io_out_bits_fp_result_4_15;
+
     dut_output.fp_result[5][0]  = dut_ptr->io_out_bits_fp_result_5_0;
     dut_output.fp_result[5][1]  = dut_ptr->io_out_bits_fp_result_5_1;
     dut_output.fp_result[5][2]  = dut_ptr->io_out_bits_fp_result_5_2;
@@ -924,7 +1236,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[5][5]  = dut_ptr->io_out_bits_fp_result_5_5;
     dut_output.fp_result[5][6]  = dut_ptr->io_out_bits_fp_result_5_6;
     dut_output.fp_result[5][7]  = dut_ptr->io_out_bits_fp_result_5_7;
-  
+    dut_output.fp_result[5][8]  = dut_ptr->io_out_bits_fp_result_5_8;
+    dut_output.fp_result[5][9]  = dut_ptr->io_out_bits_fp_result_5_9;
+    dut_output.fp_result[5][10] = dut_ptr->io_out_bits_fp_result_5_10;
+    dut_output.fp_result[5][11] = dut_ptr->io_out_bits_fp_result_5_11;
+    dut_output.fp_result[5][12] = dut_ptr->io_out_bits_fp_result_5_12;
+    dut_output.fp_result[5][13] = dut_ptr->io_out_bits_fp_result_5_13;
+    dut_output.fp_result[5][14] = dut_ptr->io_out_bits_fp_result_5_14;
+    dut_output.fp_result[5][15] = dut_ptr->io_out_bits_fp_result_5_15;
+
     dut_output.fp_result[6][0]  = dut_ptr->io_out_bits_fp_result_6_0;
     dut_output.fp_result[6][1]  = dut_ptr->io_out_bits_fp_result_6_1;
     dut_output.fp_result[6][2]  = dut_ptr->io_out_bits_fp_result_6_2;
@@ -933,7 +1253,15 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[6][5]  = dut_ptr->io_out_bits_fp_result_6_5;
     dut_output.fp_result[6][6]  = dut_ptr->io_out_bits_fp_result_6_6;
     dut_output.fp_result[6][7]  = dut_ptr->io_out_bits_fp_result_6_7;
-  
+    dut_output.fp_result[6][8]  = dut_ptr->io_out_bits_fp_result_6_8;
+    dut_output.fp_result[6][9]  = dut_ptr->io_out_bits_fp_result_6_9;
+    dut_output.fp_result[6][10] = dut_ptr->io_out_bits_fp_result_6_10;
+    dut_output.fp_result[6][11] = dut_ptr->io_out_bits_fp_result_6_11;
+    dut_output.fp_result[6][12] = dut_ptr->io_out_bits_fp_result_6_12;
+    dut_output.fp_result[6][13] = dut_ptr->io_out_bits_fp_result_6_13;
+    dut_output.fp_result[6][14] = dut_ptr->io_out_bits_fp_result_6_14;
+    dut_output.fp_result[6][15] = dut_ptr->io_out_bits_fp_result_6_15;
+
     dut_output.fp_result[7][0]  = dut_ptr->io_out_bits_fp_result_7_0;
     dut_output.fp_result[7][1]  = dut_ptr->io_out_bits_fp_result_7_1;
     dut_output.fp_result[7][2]  = dut_ptr->io_out_bits_fp_result_7_2;
@@ -942,6 +1270,150 @@ int TestDriver::diff_output_falling(VSimTop *dut_ptr) {
     dut_output.fp_result[7][5]  = dut_ptr->io_out_bits_fp_result_7_5;
     dut_output.fp_result[7][6]  = dut_ptr->io_out_bits_fp_result_7_6;
     dut_output.fp_result[7][7]  = dut_ptr->io_out_bits_fp_result_7_7;
+    dut_output.fp_result[7][8]  = dut_ptr->io_out_bits_fp_result_7_8;
+    dut_output.fp_result[7][9]  = dut_ptr->io_out_bits_fp_result_7_9;
+    dut_output.fp_result[7][10] = dut_ptr->io_out_bits_fp_result_7_10;
+    dut_output.fp_result[7][11] = dut_ptr->io_out_bits_fp_result_7_11;
+    dut_output.fp_result[7][12] = dut_ptr->io_out_bits_fp_result_7_12;
+    dut_output.fp_result[7][13] = dut_ptr->io_out_bits_fp_result_7_13;
+    dut_output.fp_result[7][14] = dut_ptr->io_out_bits_fp_result_7_14;
+    dut_output.fp_result[7][15] = dut_ptr->io_out_bits_fp_result_7_15;
+    
+    dut_output.fp_result[8][0]  = dut_ptr->io_out_bits_fp_result_8_0;
+    dut_output.fp_result[8][1]  = dut_ptr->io_out_bits_fp_result_8_1;
+    dut_output.fp_result[8][2]  = dut_ptr->io_out_bits_fp_result_8_2;
+    dut_output.fp_result[8][3]  = dut_ptr->io_out_bits_fp_result_8_3;
+    dut_output.fp_result[8][4]  = dut_ptr->io_out_bits_fp_result_8_4;
+    dut_output.fp_result[8][5]  = dut_ptr->io_out_bits_fp_result_8_5;
+    dut_output.fp_result[8][6]  = dut_ptr->io_out_bits_fp_result_8_6;
+    dut_output.fp_result[8][7]  = dut_ptr->io_out_bits_fp_result_8_7;
+    dut_output.fp_result[8][8]  = dut_ptr->io_out_bits_fp_result_8_8;
+    dut_output.fp_result[8][9]  = dut_ptr->io_out_bits_fp_result_8_9;
+    dut_output.fp_result[8][10] = dut_ptr->io_out_bits_fp_result_8_10;
+    dut_output.fp_result[8][11] = dut_ptr->io_out_bits_fp_result_8_11;
+    dut_output.fp_result[8][12] = dut_ptr->io_out_bits_fp_result_8_12;
+    dut_output.fp_result[8][13] = dut_ptr->io_out_bits_fp_result_8_13;
+    dut_output.fp_result[8][14] = dut_ptr->io_out_bits_fp_result_8_14;
+    dut_output.fp_result[8][15] = dut_ptr->io_out_bits_fp_result_8_15;
+
+    dut_output.fp_result[9][0]  = dut_ptr->io_out_bits_fp_result_9_0;
+    dut_output.fp_result[9][1]  = dut_ptr->io_out_bits_fp_result_9_1;
+    dut_output.fp_result[9][2]  = dut_ptr->io_out_bits_fp_result_9_2;
+    dut_output.fp_result[9][3]  = dut_ptr->io_out_bits_fp_result_9_3;
+    dut_output.fp_result[9][4]  = dut_ptr->io_out_bits_fp_result_9_4;
+    dut_output.fp_result[9][5]  = dut_ptr->io_out_bits_fp_result_9_5;
+    dut_output.fp_result[9][6]  = dut_ptr->io_out_bits_fp_result_9_6;
+    dut_output.fp_result[9][7]  = dut_ptr->io_out_bits_fp_result_9_7;
+    dut_output.fp_result[9][8]  = dut_ptr->io_out_bits_fp_result_9_8;
+    dut_output.fp_result[9][9]  = dut_ptr->io_out_bits_fp_result_9_9;
+    dut_output.fp_result[9][10] = dut_ptr->io_out_bits_fp_result_9_10;
+    dut_output.fp_result[9][11] = dut_ptr->io_out_bits_fp_result_9_11;
+    dut_output.fp_result[9][12] = dut_ptr->io_out_bits_fp_result_9_12;
+    dut_output.fp_result[9][13] = dut_ptr->io_out_bits_fp_result_9_13;
+    dut_output.fp_result[9][14] = dut_ptr->io_out_bits_fp_result_9_14;
+    dut_output.fp_result[9][15] = dut_ptr->io_out_bits_fp_result_9_15;
+
+    dut_output.fp_result[10][0]  = dut_ptr->io_out_bits_fp_result_10_0;
+    dut_output.fp_result[10][1]  = dut_ptr->io_out_bits_fp_result_10_1;
+    dut_output.fp_result[10][2]  = dut_ptr->io_out_bits_fp_result_10_2;
+    dut_output.fp_result[10][3]  = dut_ptr->io_out_bits_fp_result_10_3;
+    dut_output.fp_result[10][4]  = dut_ptr->io_out_bits_fp_result_10_4;
+    dut_output.fp_result[10][5]  = dut_ptr->io_out_bits_fp_result_10_5;
+    dut_output.fp_result[10][6]  = dut_ptr->io_out_bits_fp_result_10_6;
+    dut_output.fp_result[10][7]  = dut_ptr->io_out_bits_fp_result_10_7;
+    dut_output.fp_result[10][8]  = dut_ptr->io_out_bits_fp_result_10_8;
+    dut_output.fp_result[10][9]  = dut_ptr->io_out_bits_fp_result_10_9;
+    dut_output.fp_result[10][10] = dut_ptr->io_out_bits_fp_result_10_10;
+    dut_output.fp_result[10][11] = dut_ptr->io_out_bits_fp_result_10_11;
+    dut_output.fp_result[10][12] = dut_ptr->io_out_bits_fp_result_10_12;
+    dut_output.fp_result[10][13] = dut_ptr->io_out_bits_fp_result_10_13;
+    dut_output.fp_result[10][14] = dut_ptr->io_out_bits_fp_result_10_14;
+    dut_output.fp_result[10][15] = dut_ptr->io_out_bits_fp_result_10_15;
+
+    dut_output.fp_result[11][0]  = dut_ptr->io_out_bits_fp_result_11_0;
+    dut_output.fp_result[11][1]  = dut_ptr->io_out_bits_fp_result_11_1;
+    dut_output.fp_result[11][2]  = dut_ptr->io_out_bits_fp_result_11_2;
+    dut_output.fp_result[11][3]  = dut_ptr->io_out_bits_fp_result_11_3;
+    dut_output.fp_result[11][4]  = dut_ptr->io_out_bits_fp_result_11_4;
+    dut_output.fp_result[11][5]  = dut_ptr->io_out_bits_fp_result_11_5;
+    dut_output.fp_result[11][6]  = dut_ptr->io_out_bits_fp_result_11_6;
+    dut_output.fp_result[11][7]  = dut_ptr->io_out_bits_fp_result_11_7;
+    dut_output.fp_result[11][8]  = dut_ptr->io_out_bits_fp_result_11_8;
+    dut_output.fp_result[11][9]  = dut_ptr->io_out_bits_fp_result_11_9;
+    dut_output.fp_result[11][10] = dut_ptr->io_out_bits_fp_result_11_10;
+    dut_output.fp_result[11][11] = dut_ptr->io_out_bits_fp_result_11_11;
+    dut_output.fp_result[11][12] = dut_ptr->io_out_bits_fp_result_11_12;
+    dut_output.fp_result[11][13] = dut_ptr->io_out_bits_fp_result_11_13;
+    dut_output.fp_result[11][14] = dut_ptr->io_out_bits_fp_result_11_14;
+    dut_output.fp_result[11][15] = dut_ptr->io_out_bits_fp_result_11_15;
+
+    dut_output.fp_result[12][0]  = dut_ptr->io_out_bits_fp_result_12_0;
+    dut_output.fp_result[12][1]  = dut_ptr->io_out_bits_fp_result_12_1;
+    dut_output.fp_result[12][2]  = dut_ptr->io_out_bits_fp_result_12_2;
+    dut_output.fp_result[12][3]  = dut_ptr->io_out_bits_fp_result_12_3;
+    dut_output.fp_result[12][4]  = dut_ptr->io_out_bits_fp_result_12_4;
+    dut_output.fp_result[12][5]  = dut_ptr->io_out_bits_fp_result_12_5;
+    dut_output.fp_result[12][6]  = dut_ptr->io_out_bits_fp_result_12_6;
+    dut_output.fp_result[12][7]  = dut_ptr->io_out_bits_fp_result_12_7;
+    dut_output.fp_result[12][8]  = dut_ptr->io_out_bits_fp_result_12_8;
+    dut_output.fp_result[12][9]  = dut_ptr->io_out_bits_fp_result_12_9;
+    dut_output.fp_result[12][10] = dut_ptr->io_out_bits_fp_result_12_10;
+    dut_output.fp_result[12][11] = dut_ptr->io_out_bits_fp_result_12_11;
+    dut_output.fp_result[12][12] = dut_ptr->io_out_bits_fp_result_12_12;
+    dut_output.fp_result[12][13] = dut_ptr->io_out_bits_fp_result_12_13;
+    dut_output.fp_result[12][14] = dut_ptr->io_out_bits_fp_result_12_14;
+    dut_output.fp_result[12][15] = dut_ptr->io_out_bits_fp_result_12_15;
+
+    dut_output.fp_result[13][0]  = dut_ptr->io_out_bits_fp_result_13_0;
+    dut_output.fp_result[13][1]  = dut_ptr->io_out_bits_fp_result_13_1;
+    dut_output.fp_result[13][2]  = dut_ptr->io_out_bits_fp_result_13_2;
+    dut_output.fp_result[13][3]  = dut_ptr->io_out_bits_fp_result_13_3;
+    dut_output.fp_result[13][4]  = dut_ptr->io_out_bits_fp_result_13_4;
+    dut_output.fp_result[13][5]  = dut_ptr->io_out_bits_fp_result_13_5;
+    dut_output.fp_result[13][6]  = dut_ptr->io_out_bits_fp_result_13_6;
+    dut_output.fp_result[13][7]  = dut_ptr->io_out_bits_fp_result_13_7;
+    dut_output.fp_result[13][8]  = dut_ptr->io_out_bits_fp_result_13_8;
+    dut_output.fp_result[13][9]  = dut_ptr->io_out_bits_fp_result_13_9;
+    dut_output.fp_result[13][10] = dut_ptr->io_out_bits_fp_result_13_10;
+    dut_output.fp_result[13][11] = dut_ptr->io_out_bits_fp_result_13_11;
+    dut_output.fp_result[13][12] = dut_ptr->io_out_bits_fp_result_13_12;
+    dut_output.fp_result[13][13] = dut_ptr->io_out_bits_fp_result_13_13;
+    dut_output.fp_result[13][14] = dut_ptr->io_out_bits_fp_result_13_14;
+    dut_output.fp_result[13][15] = dut_ptr->io_out_bits_fp_result_13_15;
+
+    dut_output.fp_result[14][0]  = dut_ptr->io_out_bits_fp_result_14_0;
+    dut_output.fp_result[14][1]  = dut_ptr->io_out_bits_fp_result_14_1;
+    dut_output.fp_result[14][2]  = dut_ptr->io_out_bits_fp_result_14_2;
+    dut_output.fp_result[14][3]  = dut_ptr->io_out_bits_fp_result_14_3;
+    dut_output.fp_result[14][4]  = dut_ptr->io_out_bits_fp_result_14_4;
+    dut_output.fp_result[14][5]  = dut_ptr->io_out_bits_fp_result_14_5;
+    dut_output.fp_result[14][6]  = dut_ptr->io_out_bits_fp_result_14_6;
+    dut_output.fp_result[14][7]  = dut_ptr->io_out_bits_fp_result_14_7;
+    dut_output.fp_result[14][8]  = dut_ptr->io_out_bits_fp_result_14_8;
+    dut_output.fp_result[14][9]  = dut_ptr->io_out_bits_fp_result_14_9;
+    dut_output.fp_result[14][10] = dut_ptr->io_out_bits_fp_result_14_10;
+    dut_output.fp_result[14][11] = dut_ptr->io_out_bits_fp_result_14_11;
+    dut_output.fp_result[14][12] = dut_ptr->io_out_bits_fp_result_14_12;
+    dut_output.fp_result[14][13] = dut_ptr->io_out_bits_fp_result_14_13;
+    dut_output.fp_result[14][14] = dut_ptr->io_out_bits_fp_result_14_14;
+    dut_output.fp_result[14][15] = dut_ptr->io_out_bits_fp_result_14_15;
+
+    dut_output.fp_result[15][0]  = dut_ptr->io_out_bits_fp_result_15_0;
+    dut_output.fp_result[15][1]  = dut_ptr->io_out_bits_fp_result_15_1;
+    dut_output.fp_result[15][2]  = dut_ptr->io_out_bits_fp_result_15_2;
+    dut_output.fp_result[15][3]  = dut_ptr->io_out_bits_fp_result_15_3;
+    dut_output.fp_result[15][4]  = dut_ptr->io_out_bits_fp_result_15_4;
+    dut_output.fp_result[15][5]  = dut_ptr->io_out_bits_fp_result_15_5;
+    dut_output.fp_result[15][6]  = dut_ptr->io_out_bits_fp_result_15_6;
+    dut_output.fp_result[15][7]  = dut_ptr->io_out_bits_fp_result_15_7;
+    dut_output.fp_result[15][8]  = dut_ptr->io_out_bits_fp_result_15_8;
+    dut_output.fp_result[15][9]  = dut_ptr->io_out_bits_fp_result_15_9;
+    dut_output.fp_result[15][10] = dut_ptr->io_out_bits_fp_result_15_10;
+    dut_output.fp_result[15][11] = dut_ptr->io_out_bits_fp_result_15_11;
+    dut_output.fp_result[15][12] = dut_ptr->io_out_bits_fp_result_15_12;
+    dut_output.fp_result[15][13] = dut_ptr->io_out_bits_fp_result_15_13;
+    dut_output.fp_result[15][14] = dut_ptr->io_out_bits_fp_result_15_14;
+    dut_output.fp_result[15][15] = dut_ptr->io_out_bits_fp_result_15_15;
 
 
     // KEY: compare dut_output with expect_output
