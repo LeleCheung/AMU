@@ -19,10 +19,10 @@ trait MatrixParameter {
   val significandWidth : Int = 53 // fp16, fp32, fp64 are all 53
   val floatWidth = exponentWidth + significandWidth
 
-  val dim : Int = 64
+  val dim : Int = 16
   val dim_n : Int = 8
   val dim_k : Int = 4
-  val num : Int = 8 // 64/8
+  val num : Int = dim/dim_n
 }
 
 class MatrixBundle extends Bundle with MatrixParameter
