@@ -6,7 +6,7 @@
 #include <random>
 #include <cstring>
 
-#define DIM 8
+#define DIM 64
 #define DIM_K 4
 #define NUM 3
 #define PRE 5

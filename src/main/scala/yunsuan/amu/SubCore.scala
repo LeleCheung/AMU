@@ -20,16 +20,16 @@ class SubCore() extends Module{
   val significandWidth : Int = 53 // fp16, fp32, fp64 are all 53
   val floatWidth = exponentWidth + significandWidth
 
-  val dim : Int = 8
+  val dim_n : Int = 8
   val dim_k : Int = 4
 
   // IO  
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
-    val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
-    val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
+    val fp_a     = Input(Vec(dim_n, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
+    val fp_b     = Input(Vec(dim_k, Vec(dim_n, UInt(floatWidth.W)))) // input matrix b
+    val fp_c     = Input(Vec(dim_n, Vec(dim_n, UInt(floatWidth.W)))) // input matrix c 
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -39,7 +39,7 @@ class SubCore() extends Module{
     val fp_bIsFpCanonicalNAN = Input(Bool())
     val fp_cIsFpCanonicalNAN = Input(Bool())
 
-    val fp_result            = Output(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // output matrix
+    val fp_result            = Output(Vec(dim_n, Vec(dim_n, UInt(floatWidth.W)))) // output matrix
     val fflags               = Output(UInt(5.W)) // exception flags
   })
 
@@ -58,14 +58,14 @@ class SubCore() extends Module{
   val c = RegEnable(io.fp_c, fire_r)
 
   // 8*8 4way-DPA
-  val Array = Seq.fill(dim, dim)(Module(new DPA()))
+  val Array = Seq.fill(dim_n, dim_n)(Module(new DPA()))
 
   // use a 2D reg array to store the output
-  // val result_reg_array = Reg(Vec(dim, Vec(dim, UInt(floatWidth.W))))
+  // val result_reg_array = Reg(Vec(dim_n, Vec(dim_n, UInt(floatWidth.W))))
 
   // input in Array
-  for(i <- 0 until dim){
-    for(j <- 0 until dim){
+  for(i <- 0 until dim_n){
+    for(j <- 0 until dim_n){
 
       // SubCore only assigns the first element of fp_c as non-zero
       val fp_c_vec = Wire(Vec(dim_k, UInt(floatWidth.W)))
