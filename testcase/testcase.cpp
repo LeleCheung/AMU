@@ -7,6 +7,7 @@
 #include <cstring>
 
 #define DIM 8
+#define DIM_K 4
 #define NUM 3
 #define PRE 5
 
@@ -28,14 +29,19 @@ int main() {
     std::uniform_real_distribution<double> dis(0.0, 1.0);
 
     for (int i = 0; i < NUM; i++) {
-        torch::Tensor fp_a = torch::empty({DIM, DIM});
-        torch::Tensor fp_b = torch::empty({DIM, DIM});
+        torch::Tensor fp_a = torch::empty({DIM, DIM_K});
+        torch::Tensor fp_b = torch::empty({DIM_K, DIM});
 
         for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
+            for (int y = 0; y < DIM_K; y++) {
                 double randomValueA = dis(gen);
-                double randomValueB = dis(gen);
                 fp_a[x][y] = randomValueA;
+            }
+        }
+
+        for (int x = 0; x < DIM_K; x++) {
+            for (int y = 0; y < DIM; y++) {
+                double randomValueB = dis(gen);
                 fp_b[x][y] = randomValueB;
             }
         }
@@ -47,14 +53,14 @@ int main() {
         auto tensor_r = fp_result.accessor<float, 2>();
 
         for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM; y++) {
+            for (int y = 0; y < DIM_K; y++) {
                 file << floatToFP64(tensor_a[x][y]) << " ";
             }
             file << std::endl;
         }
         file << std::endl;
 
-        for (int x = 0; x < DIM; x++) {
+        for (int x = 0; x < DIM_K; x++) {
             for (int y = 0; y < DIM; y++) {
                 file << floatToFP64(tensor_b[x][y]) << " ";
             }
