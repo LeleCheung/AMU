@@ -3,6 +3,7 @@
 
 
 #define dim 8
+#define dim_k 4
 
 struct MatrixInput{
   /*
@@ -19,8 +20,8 @@ struct MatrixInput{
     val fp_cIsFpCanonicalNAN = Input(Bool())
   */
   bool fire;
-  uint64_t fp_a[dim][dim];
-  uint64_t fp_b[dim][dim];
+  uint64_t fp_a[dim][dim_k];
+  uint64_t fp_b[dim_k][dim];
   uint64_t fp_c[dim][dim];
   uint8_t round_mode;
   uint8_t fp_format;

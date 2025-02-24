@@ -21,13 +21,13 @@ class DPA() extends Module{
   val significandWidth : Int = 53 // fp16, fp32, fp64 are all 53
   val floatWidth = exponentWidth + significandWidth
 
-  val dim : Int = 8
+  val dim_k : Int = 4
 
   // IO  
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, UInt(floatWidth.W))) // input vector a, b, c (only the first element of fp_c isn't 0)
+    val fp_a, fp_b, fp_c     = Input(Vec(dim_k, UInt(floatWidth.W))) // input vector a, b, c (only the first element of fp_c isn't 0)
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -45,19 +45,18 @@ class DPA() extends Module{
   val fire0_r = io.fire // FMA stage 0
   val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
   val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
-  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
-  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
-  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
-  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
+  val fire3_r = GatedValidRegNext(fire2_r) // store 4 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 2 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 1 output
 
   // use Seq.fill(dim) to create a 1D array of FloatFMA: dot product 
-  val FMAArray = Seq.fill(dim)(Module(new FloatFMA()))
+  val FMAArray = Seq.fill(dim_k)(Module(new FloatFMA()))
 
   // use a register array to store the result
-  val PartialProductArray = Seq.fill(dim)(RegInit(0.U(floatWidth.W)))
+  val PartialProductArray = Seq.fill(dim_k)(RegInit(0.U(floatWidth.W)))
 
   // dot product
-  for(i <- 0 until dim){
+  for(i <- 0 until dim_k){
     FMAArray(i).io.fire := fire0_r
     FMAArray(i).io.fp_a := io.fp_a(i)
     FMAArray(i).io.fp_b := io.fp_b(i)
@@ -72,73 +71,32 @@ class DPA() extends Module{
     // io.fflags := FMAArray(i).io.fflags // todo: & all fflags?
   }
 
-  // Accumulate in an 8-4-2-1 tree
-
-  val Adder_4_0 = Module(new FloatAdder())
-  val Adder_4_1 = Module(new FloatAdder())
-  val Adder_4_2 = Module(new FloatAdder())
-  val Adder_4_3 = Module(new FloatAdder())
+  // Accumulate in an 4-2-1 tree
 
   val Adder_2_0 = Module(new FloatAdder())
   val Adder_2_1 = Module(new FloatAdder())
 
   val Adder_1 = Module(new FloatAdder())
 
-  Adder_4_0.io.fire := fire4_r
-  Adder_4_0.io.fp_a := PartialProductArray(0)
-  Adder_4_0.io.fp_b := PartialProductArray(1)
-  Adder_4_0.io.round_mode := io.round_mode
-  Adder_4_0.io.fp_format := io.fp_format
-  Adder_4_0.io.op_code :=  FaddOpCode.fadd
-  Adder_4_0.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
-  Adder_4_0.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
-
-  Adder_4_1.io.fire := fire4_r
-  Adder_4_1.io.fp_a := PartialProductArray(2)
-  Adder_4_1.io.fp_b := PartialProductArray(3)
-  Adder_4_1.io.round_mode := io.round_mode
-  Adder_4_1.io.fp_format := io.fp_format
-  Adder_4_1.io.op_code :=  FaddOpCode.fadd
-  Adder_4_1.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
-  Adder_4_1.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
-
-  Adder_4_2.io.fire := fire4_r
-  Adder_4_2.io.fp_a := PartialProductArray(4)
-  Adder_4_2.io.fp_b := PartialProductArray(5)
-  Adder_4_2.io.round_mode := io.round_mode
-  Adder_4_2.io.fp_format := io.fp_format
-  Adder_4_2.io.op_code :=  FaddOpCode.fadd
-  Adder_4_2.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
-  Adder_4_2.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
-
-  Adder_4_3.io.fire := fire4_r
-  Adder_4_3.io.fp_a := PartialProductArray(6)
-  Adder_4_3.io.fp_b := PartialProductArray(7)
-  Adder_4_3.io.round_mode := io.round_mode
-  Adder_4_3.io.fp_format := io.fp_format
-  Adder_4_3.io.op_code :=  FaddOpCode.fadd
-  Adder_4_3.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
-  Adder_4_3.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
-  
-  Adder_2_0.io.fire := fire5_r
-  Adder_2_0.io.fp_a := Adder_4_0.io.fp_result
-  Adder_2_0.io.fp_b := Adder_4_1.io.fp_result
+  Adder_2_0.io.fire := fire4_r
+  Adder_2_0.io.fp_a := PartialProductArray(0)
+  Adder_2_0.io.fp_b := PartialProductArray(1)
   Adder_2_0.io.round_mode := io.round_mode
   Adder_2_0.io.fp_format := io.fp_format
   Adder_2_0.io.op_code :=  FaddOpCode.fadd
   Adder_2_0.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
   Adder_2_0.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
 
-  Adder_2_1.io.fire := fire5_r
-  Adder_2_1.io.fp_a := Adder_4_2.io.fp_result
-  Adder_2_1.io.fp_b := Adder_4_3.io.fp_result
+  Adder_2_1.io.fire := fire4_r
+  Adder_2_1.io.fp_a := PartialProductArray(2)
+  Adder_2_1.io.fp_b := PartialProductArray(3)
   Adder_2_1.io.round_mode := io.round_mode
   Adder_2_1.io.fp_format := io.fp_format
   Adder_2_1.io.op_code :=  FaddOpCode.fadd
   Adder_2_1.io.fp_aIsFpCanonicalNAN := io.fp_aIsFpCanonicalNAN
   Adder_2_1.io.fp_bIsFpCanonicalNAN := io.fp_bIsFpCanonicalNAN
 
-  Adder_1.io.fire := fire6_r
+  Adder_1.io.fire := fire5_r
   Adder_1.io.fp_a := Adder_2_0.io.fp_result
   Adder_1.io.fp_b := Adder_2_1.io.fp_result
   Adder_1.io.round_mode := io.round_mode

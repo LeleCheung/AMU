@@ -22,12 +22,15 @@ class AMU() extends Module{
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
+  val dim_k : Int = 4
 
   // IO  
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
+    val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
+    val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
+    val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64

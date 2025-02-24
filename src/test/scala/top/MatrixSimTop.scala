@@ -20,6 +20,7 @@ trait MatrixParameter {
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
+  val dim_k : Int = 4
 }
 
 class MatrixBundle extends Bundle with MatrixParameter
@@ -27,7 +28,9 @@ class MatrixBundle extends Bundle with MatrixParameter
 class MatrixInputIO extends MatrixBundle {
   val fire                 = Bool() // valid
 
-  val fp_a, fp_b, fp_c     = Vec(dim, Vec(dim, UInt(floatWidth.W))) // input matrix a, b, c 
+  val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
+  val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
+  val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
 
   val round_mode           = UInt(3.W) // rounding mode
   val fp_format            = UInt(2.W) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -74,14 +77,13 @@ class SimTop() extends Module{
   val fire0_r = GatedValidRegNext(fire_r) // FMA stage 0
   val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
   val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
-  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
-  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
-  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
-  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
+  val fire3_r = GatedValidRegNext(fire2_r) // store 4 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 2 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 1 output
 
   // TODO: valid & ready
   io.in.ready := true.B // always ready, no stall in AMU pipeline
-  io.out.valid := GatedValidRegNext(GatedValidRegNext(fire6_r)) // output valid 
+  io.out.valid := GatedValidRegNext(GatedValidRegNext(fire5_r)) // output valid 
 
 }
 

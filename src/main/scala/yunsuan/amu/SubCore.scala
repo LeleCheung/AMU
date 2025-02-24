@@ -21,12 +21,15 @@ class SubCore() extends Module{
   val floatWidth = exponentWidth + significandWidth
 
   val dim : Int = 8
+  val dim_k : Int = 4
 
   // IO  
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
+    val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
+    val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
+    val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -45,17 +48,16 @@ class SubCore() extends Module{
   val fire0_r = GatedValidRegNext(fire_r) // FMA stage 0
   val fire1_r = GatedValidRegNext(fire0_r) // FMA stage 1
   val fire2_r = GatedValidRegNext(fire1_r) // FMA stage 2
-  val fire3_r = GatedValidRegNext(fire2_r) // store 8 partial product
-  val fire4_r = GatedValidRegNext(fire3_r) // store 4 partial product
-  val fire5_r = GatedValidRegNext(fire4_r) // store 2 partial product
-  val fire6_r = GatedValidRegNext(fire5_r) // store 1 output
+  val fire3_r = GatedValidRegNext(fire2_r) // store 4 partial product
+  val fire4_r = GatedValidRegNext(fire3_r) // store 2 partial product
+  val fire5_r = GatedValidRegNext(fire4_r) // store 1 output
 
   // 2D reg array to store A, B, C
   val a = RegEnable(io.fp_a, fire_r)
   val b = RegEnable(io.fp_b, fire_r)
   val c = RegEnable(io.fp_c, fire_r)
 
-  // 8*8 DPA
+  // 8*8 4way-DPA
   val Array = Seq.fill(dim, dim)(Module(new DPA()))
 
   // use a 2D reg array to store the output
@@ -66,14 +68,14 @@ class SubCore() extends Module{
     for(j <- 0 until dim){
 
       // SubCore only assigns the first element of fp_c as non-zero
-      val fp_c_vec = Wire(Vec(dim, UInt(floatWidth.W)))
-      for (k <- 0 until dim) {
+      val fp_c_vec = Wire(Vec(dim_k, UInt(floatWidth.W)))
+      for (k <- 0 until dim_k) {
         fp_c_vec(k) := 0.U
       }
       fp_c_vec(0) := c(i)(j)
 
-      val fp_b_vec = Wire(Vec(dim, UInt(floatWidth.W)))
-      for (k <- 0 until dim) {
+      val fp_b_vec = Wire(Vec(dim_k, UInt(floatWidth.W)))
+      for (k <- 0 until dim_k) {
         fp_b_vec(k) := b(k)(j)
       }
 
