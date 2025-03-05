@@ -58,7 +58,7 @@ class SimTop() extends Module{
   val io = IO(new MatrixSimTopIO())
 
   // instantiate 1 SubCore
-  val AMU = Module(new AMU())
+  val AMU = Module(new AMCore())
 
   // connect IO
   AMU.io.fire := io.in.bits.fire

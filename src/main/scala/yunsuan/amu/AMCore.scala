@@ -14,8 +14,10 @@ import yunsuan.fpu._
 
 import scala.collection.mutable.ListBuffer
 
+// import
 
-class AMU() extends Module{ 
+
+class AMCore() extends Module{ 
   // CAUTION: change fp_format for fp16/fp32/fp64
   val exponentWidth : Int = 11 // fp16, fp32, fp64 are all 11
   val significandWidth : Int = 53 // fp16, fp32, fp64 are all 53
@@ -45,6 +47,9 @@ class AMU() extends Module{
     val fp_result            = Output(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // output matrix
     val fflags               = Output(UInt(5.W)) // exception flags
   })
+
+  // node
+  // val node
 
   // instantiate 8*8 SubCore
   val SubCoreArray = Seq.fill(num, num)(Module(new SubCore()))
