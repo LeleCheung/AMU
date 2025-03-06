@@ -9,7 +9,7 @@
 FILE* file_read;
 int i;
 
-uint64_t array_a_uint64[DIM][DIM_K];
+uint64_t array_a_transpose_uint64[DIM_K][DIM];
 uint64_t array_b_uint64[DIM_K][DIM];
 uint64_t array_r_uint64[DIM][DIM];
 
@@ -29,10 +29,10 @@ uint64_t fp64ToUint64(const char* fp64Hex) {
 void fun1(){
     char fp64Hex[17]; // 16 characters + 1 for null terminator
     // Read Tensor A
-    for (int x = 0; x < DIM; x++) {
-        for (int y = 0; y < DIM_K; y++) {
+    for (int x = 0; x < DIM_K; x++) {
+        for (int y = 0; y < DIM; y++) {
             fscanf(file_read, "%s", fp64Hex); // Read hex string
-            array_a_uint64[x][y] = fp64ToUint64(fp64Hex); // Convert to uint64
+            array_a_transpose_uint64[x][y] = fp64ToUint64(fp64Hex); // Convert to uint64
         }
     }
     fgetc(file_read); // Ignore newline
@@ -58,14 +58,13 @@ void fun1(){
     // Print the test case results
 
     printf("************************* Test case %d *************************\n", i + 1);
-    printf("Tensor A:\n");
-    for (int x = 0; x < DIM; x++) {
-        for (int y = 0; y < DIM_K; y++) {
-            printf("%f ", Uint64ToFloat(array_a_uint64[x][y])); // Print elements of Tensor A
+    printf("Tensor A Transpose:\n");
+    for (int x = 0; x < DIM_K; x++) {
+        for (int y = 0; y < DIM; y++) {
+            printf("%f ", Uint64ToFloat(array_a_transpose_uint64[x][y])); // Print elements of Tensor A
         }
         printf("\n");
     }
-
     printf("Tensor B:\n");
     for (int x = 0; x < DIM_K; x++) {
         for (int y = 0; y < DIM; y++) {

@@ -30,6 +30,7 @@ int main() {
 
     for (int i = 0; i < NUM; i++) {
         torch::Tensor fp_a = torch::empty({DIM, DIM_K});
+        torch::Tensor fp_a_transpose = torch::empty({DIM_K, DIM});
         torch::Tensor fp_b = torch::empty({DIM_K, DIM});
 
         for (int x = 0; x < DIM; x++) {
@@ -48,13 +49,20 @@ int main() {
 
         torch::Tensor fp_result = torch::matmul(fp_a, fp_b);
 
-        auto tensor_a = fp_a.accessor<float, 2>();
+        // Transpose A
+        for (int x = 0; x < DIM; x++) {
+            for (int y = 0; y < DIM_K; y++) {
+                fp_a_transpose[y][x] = fp_a[x][y];
+            }
+        }
+
+        auto tensor_a_transpose = fp_a_transpose.accessor<float, 2>();
         auto tensor_b = fp_b.accessor<float, 2>();
         auto tensor_r = fp_result.accessor<float, 2>();
 
-        for (int x = 0; x < DIM; x++) {
-            for (int y = 0; y < DIM_K; y++) {
-                file << floatToFP64(tensor_a[x][y]) << " ";
+        for (int x = 0; x < DIM_K; x++) {
+            for (int y = 0; y < DIM; y++) {
+                file << floatToFP64(tensor_a_transpose[x][y]) << " ";
             }
             file << std::endl;
         }
