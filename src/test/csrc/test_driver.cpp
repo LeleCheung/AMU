@@ -486,7 +486,7 @@ void TestDriver::get_random_input() {
   printf("MATRIX Get Random Input\n");
   /*
   bool fire;
-  uint64_t fp_a[dim][dim];
+  uint64_t fp_a_transpose[dim][dim];
   uint64_t fp_b[dim][dim];
   uint64_t fp_c[dim][dim];
   uint8_t round_mode;
@@ -521,14 +521,14 @@ void TestDriver::get_random_input() {
 
   int i = 0; // Test case number
 
-  // Read Tensor A
-  for (int x = 0; x < DIM; x++) {
-      for (int y = 0; y < DIM_K; y++) {
+  // Read Tensor A Transpose
+  for (int x = 0; x < DIM_K; x++) {
+      for (int y = 0; y < DIM; y++) {
           fscanf(file_read, "%s", fp64Hex); // Read hex string
-          input.fp_a[x][y] = fp64ToUint64(fp64Hex);
+          input.fp_a_transpose[x][y] = fp64ToUint64(fp64Hex); // Convert to uint64
       }
   }
-  fgetc(file_read); // Ignore newline
+  fgetc(file_read); // Ignore newlines
 
   // Read Tensor B
   for (int x = 0; x < DIM_K; x++) {
@@ -562,7 +562,7 @@ void TestDriver::get_random_input() {
   printf("Tensor A:\n");
   for (int x = 0; x < DIM; x++) {
       for (int y = 0; y < DIM; y++) {
-          printf("%lx ", input.fp_a[x][y]); // Print elements of Tensor A
+          printf("%lx ", input.fp_a_transpose[x][y]); // Print elements of Tensor A
       }
       printf("\n");
   }
@@ -699,86 +699,75 @@ bool TestDriver::assign_input_raising(VSimTop *dut_ptr) {
   dut_ptr->io_in_bits_fp_bIsFpCanonicalNAN  = input.fp_bIsFpCanonicalNAN;
   dut_ptr->io_in_bits_fp_cIsFpCanonicalNAN  = input.fp_cIsFpCanonicalNAN;
 
-  // fp_a assignment
-  dut_ptr->io_in_bits_fp_a_0_0 = input.fp_a[0][0];
-  dut_ptr->io_in_bits_fp_a_0_1 = input.fp_a[0][1];
-  dut_ptr->io_in_bits_fp_a_0_2 = input.fp_a[0][2];
-  dut_ptr->io_in_bits_fp_a_0_3 = input.fp_a[0][3];
+  // fp_a_transpose assignments
+  dut_ptr->io_in_bits_fp_a_transpose_0_0 = input.fp_a_transpose[0][0];
+  dut_ptr->io_in_bits_fp_a_transpose_0_1 = input.fp_a_transpose[0][1];
+  dut_ptr->io_in_bits_fp_a_transpose_0_2 = input.fp_a_transpose[0][2];
+  dut_ptr->io_in_bits_fp_a_transpose_0_3 = input.fp_a_transpose[0][3];
+  dut_ptr->io_in_bits_fp_a_transpose_0_4 = input.fp_a_transpose[0][4];
+  dut_ptr->io_in_bits_fp_a_transpose_0_5 = input.fp_a_transpose[0][5];
+  dut_ptr->io_in_bits_fp_a_transpose_0_6 = input.fp_a_transpose[0][6];
+  dut_ptr->io_in_bits_fp_a_transpose_0_7 = input.fp_a_transpose[0][7];
+  dut_ptr->io_in_bits_fp_a_transpose_0_8 = input.fp_a_transpose[0][8];
+  dut_ptr->io_in_bits_fp_a_transpose_0_9 = input.fp_a_transpose[0][9];
+  dut_ptr->io_in_bits_fp_a_transpose_0_10 = input.fp_a_transpose[0][10];
+  dut_ptr->io_in_bits_fp_a_transpose_0_11 = input.fp_a_transpose[0][11];
+  dut_ptr->io_in_bits_fp_a_transpose_0_12 = input.fp_a_transpose[0][12];
+  dut_ptr->io_in_bits_fp_a_transpose_0_13 = input.fp_a_transpose[0][13];
+  dut_ptr->io_in_bits_fp_a_transpose_0_14 = input.fp_a_transpose[0][14];
+  dut_ptr->io_in_bits_fp_a_transpose_0_15 = input.fp_a_transpose[0][15];
 
-  dut_ptr->io_in_bits_fp_a_1_0 = input.fp_a[1][0];
-  dut_ptr->io_in_bits_fp_a_1_1 = input.fp_a[1][1];
-  dut_ptr->io_in_bits_fp_a_1_2 = input.fp_a[1][2];
-  dut_ptr->io_in_bits_fp_a_1_3 = input.fp_a[1][3];
+  dut_ptr->io_in_bits_fp_a_transpose_1_0 = input.fp_a_transpose[1][0];
+  dut_ptr->io_in_bits_fp_a_transpose_1_1 = input.fp_a_transpose[1][1];
+  dut_ptr->io_in_bits_fp_a_transpose_1_2 = input.fp_a_transpose[1][2];
+  dut_ptr->io_in_bits_fp_a_transpose_1_3 = input.fp_a_transpose[1][3];
+  dut_ptr->io_in_bits_fp_a_transpose_1_4 = input.fp_a_transpose[1][4];
+  dut_ptr->io_in_bits_fp_a_transpose_1_5 = input.fp_a_transpose[1][5];
+  dut_ptr->io_in_bits_fp_a_transpose_1_6 = input.fp_a_transpose[1][6];
+  dut_ptr->io_in_bits_fp_a_transpose_1_7 = input.fp_a_transpose[1][7];
+  dut_ptr->io_in_bits_fp_a_transpose_1_8 = input.fp_a_transpose[1][8];
+  dut_ptr->io_in_bits_fp_a_transpose_1_9 = input.fp_a_transpose[1][9];
+  dut_ptr->io_in_bits_fp_a_transpose_1_10 = input.fp_a_transpose[1][10];
+  dut_ptr->io_in_bits_fp_a_transpose_1_11 = input.fp_a_transpose[1][11];
+  dut_ptr->io_in_bits_fp_a_transpose_1_12 = input.fp_a_transpose[1][12];
+  dut_ptr->io_in_bits_fp_a_transpose_1_13 = input.fp_a_transpose[1][13];
+  dut_ptr->io_in_bits_fp_a_transpose_1_14 = input.fp_a_transpose[1][14];
+  dut_ptr->io_in_bits_fp_a_transpose_1_15 = input.fp_a_transpose[1][15];
+
+  dut_ptr->io_in_bits_fp_a_transpose_2_0 = input.fp_a_transpose[2][0];
+  dut_ptr->io_in_bits_fp_a_transpose_2_1 = input.fp_a_transpose[2][1];
+  dut_ptr->io_in_bits_fp_a_transpose_2_2 = input.fp_a_transpose[2][2];
+  dut_ptr->io_in_bits_fp_a_transpose_2_3 = input.fp_a_transpose[2][3];
+  dut_ptr->io_in_bits_fp_a_transpose_2_4 = input.fp_a_transpose[2][4];
+  dut_ptr->io_in_bits_fp_a_transpose_2_5 = input.fp_a_transpose[2][5];
+  dut_ptr->io_in_bits_fp_a_transpose_2_6 = input.fp_a_transpose[2][6];
+  dut_ptr->io_in_bits_fp_a_transpose_2_7 = input.fp_a_transpose[2][7];
+  dut_ptr->io_in_bits_fp_a_transpose_2_8 = input.fp_a_transpose[2][8];
+  dut_ptr->io_in_bits_fp_a_transpose_2_9 = input.fp_a_transpose[2][9];
+  dut_ptr->io_in_bits_fp_a_transpose_2_10 = input.fp_a_transpose[2][10];
+  dut_ptr->io_in_bits_fp_a_transpose_2_11 = input.fp_a_transpose[2][11];
+  dut_ptr->io_in_bits_fp_a_transpose_2_12 = input.fp_a_transpose[2][12];
+  dut_ptr->io_in_bits_fp_a_transpose_2_13 = input.fp_a_transpose[2][13];
+  dut_ptr->io_in_bits_fp_a_transpose_2_14 = input.fp_a_transpose[2][14];
+  dut_ptr->io_in_bits_fp_a_transpose_2_15 = input.fp_a_transpose[2][15];
+
+  dut_ptr->io_in_bits_fp_a_transpose_3_0 = input.fp_a_transpose[3][0];
+  dut_ptr->io_in_bits_fp_a_transpose_3_1 = input.fp_a_transpose[3][1];
+  dut_ptr->io_in_bits_fp_a_transpose_3_2 = input.fp_a_transpose[3][2];
+  dut_ptr->io_in_bits_fp_a_transpose_3_3 = input.fp_a_transpose[3][3];
+  dut_ptr->io_in_bits_fp_a_transpose_3_4 = input.fp_a_transpose[3][4];
+  dut_ptr->io_in_bits_fp_a_transpose_3_5 = input.fp_a_transpose[3][5];
+  dut_ptr->io_in_bits_fp_a_transpose_3_6 = input.fp_a_transpose[3][6];
+  dut_ptr->io_in_bits_fp_a_transpose_3_7 = input.fp_a_transpose[3][7];
+  dut_ptr->io_in_bits_fp_a_transpose_3_8 = input.fp_a_transpose[3][8];
+  dut_ptr->io_in_bits_fp_a_transpose_3_9 = input.fp_a_transpose[3][9];
+  dut_ptr->io_in_bits_fp_a_transpose_3_10 = input.fp_a_transpose[3][10];
+  dut_ptr->io_in_bits_fp_a_transpose_3_11 = input.fp_a_transpose[3][11];
+  dut_ptr->io_in_bits_fp_a_transpose_3_12 = input.fp_a_transpose[3][12];
+  dut_ptr->io_in_bits_fp_a_transpose_3_13 = input.fp_a_transpose[3][13];
+  dut_ptr->io_in_bits_fp_a_transpose_3_14 = input.fp_a_transpose[3][14];
+  dut_ptr->io_in_bits_fp_a_transpose_3_15 = input.fp_a_transpose[3][15];
   
-  dut_ptr->io_in_bits_fp_a_2_0 = input.fp_a[2][0];
-  dut_ptr->io_in_bits_fp_a_2_1 = input.fp_a[2][1];
-  dut_ptr->io_in_bits_fp_a_2_2 = input.fp_a[2][2];
-  dut_ptr->io_in_bits_fp_a_2_3 = input.fp_a[2][3];
-
-  dut_ptr->io_in_bits_fp_a_3_0 = input.fp_a[3][0];
-  dut_ptr->io_in_bits_fp_a_3_1 = input.fp_a[3][1];
-  dut_ptr->io_in_bits_fp_a_3_2 = input.fp_a[3][2];
-  dut_ptr->io_in_bits_fp_a_3_3 = input.fp_a[3][3];
-
-  dut_ptr->io_in_bits_fp_a_4_0 = input.fp_a[4][0];
-  dut_ptr->io_in_bits_fp_a_4_1 = input.fp_a[4][1];
-  dut_ptr->io_in_bits_fp_a_4_2 = input.fp_a[4][2];
-  dut_ptr->io_in_bits_fp_a_4_3 = input.fp_a[4][3];
-
-  dut_ptr->io_in_bits_fp_a_5_0 = input.fp_a[5][0];
-  dut_ptr->io_in_bits_fp_a_5_1 = input.fp_a[5][1];
-  dut_ptr->io_in_bits_fp_a_5_2 = input.fp_a[5][2];
-  dut_ptr->io_in_bits_fp_a_5_3 = input.fp_a[5][3];
-
-  dut_ptr->io_in_bits_fp_a_6_0 = input.fp_a[6][0];
-  dut_ptr->io_in_bits_fp_a_6_1 = input.fp_a[6][1];
-  dut_ptr->io_in_bits_fp_a_6_2 = input.fp_a[6][2];
-  dut_ptr->io_in_bits_fp_a_6_3 = input.fp_a[6][3];
-
-  dut_ptr->io_in_bits_fp_a_7_0 = input.fp_a[7][0];
-  dut_ptr->io_in_bits_fp_a_7_1 = input.fp_a[7][1];
-  dut_ptr->io_in_bits_fp_a_7_2 = input.fp_a[7][2];
-  dut_ptr->io_in_bits_fp_a_7_3 = input.fp_a[7][3];
-
-  dut_ptr->io_in_bits_fp_a_8_0 = input.fp_a[8][0];
-  dut_ptr->io_in_bits_fp_a_8_1 = input.fp_a[8][1];
-  dut_ptr->io_in_bits_fp_a_8_2 = input.fp_a[8][2];
-  dut_ptr->io_in_bits_fp_a_8_3 = input.fp_a[8][3];
-
-  dut_ptr->io_in_bits_fp_a_9_0 = input.fp_a[9][0];
-  dut_ptr->io_in_bits_fp_a_9_1 = input.fp_a[9][1];
-  dut_ptr->io_in_bits_fp_a_9_2 = input.fp_a[9][2];
-  dut_ptr->io_in_bits_fp_a_9_3 = input.fp_a[9][3];
-
-  dut_ptr->io_in_bits_fp_a_10_0 = input.fp_a[10][0];
-  dut_ptr->io_in_bits_fp_a_10_1 = input.fp_a[10][1];
-  dut_ptr->io_in_bits_fp_a_10_2 = input.fp_a[10][2];
-  dut_ptr->io_in_bits_fp_a_10_3 = input.fp_a[10][3];
-
-  dut_ptr->io_in_bits_fp_a_11_0 = input.fp_a[11][0];
-  dut_ptr->io_in_bits_fp_a_11_1 = input.fp_a[11][1];
-  dut_ptr->io_in_bits_fp_a_11_2 = input.fp_a[11][2];
-  dut_ptr->io_in_bits_fp_a_11_3 = input.fp_a[11][3];
-
-  dut_ptr->io_in_bits_fp_a_12_0 = input.fp_a[12][0];
-  dut_ptr->io_in_bits_fp_a_12_1 = input.fp_a[12][1];
-  dut_ptr->io_in_bits_fp_a_12_2 = input.fp_a[12][2];
-  dut_ptr->io_in_bits_fp_a_12_3 = input.fp_a[12][3];
-
-  dut_ptr->io_in_bits_fp_a_13_0 = input.fp_a[13][0];
-  dut_ptr->io_in_bits_fp_a_13_1 = input.fp_a[13][1];
-  dut_ptr->io_in_bits_fp_a_13_2 = input.fp_a[13][2];
-  dut_ptr->io_in_bits_fp_a_13_3 = input.fp_a[13][3];
-
-  dut_ptr->io_in_bits_fp_a_14_0 = input.fp_a[14][0];
-  dut_ptr->io_in_bits_fp_a_14_1 = input.fp_a[14][1];
-  dut_ptr->io_in_bits_fp_a_14_2 = input.fp_a[14][2];
-  dut_ptr->io_in_bits_fp_a_14_3 = input.fp_a[14][3];
-
-  dut_ptr->io_in_bits_fp_a_15_0 = input.fp_a[15][0];
-  dut_ptr->io_in_bits_fp_a_15_1 = input.fp_a[15][1];
-  dut_ptr->io_in_bits_fp_a_15_2 = input.fp_a[15][2];
-  dut_ptr->io_in_bits_fp_a_15_3 = input.fp_a[15][3];
 
   // fp_b assignments
   dut_ptr->io_in_bits_fp_b_0_0 = input.fp_b[0][0];
@@ -1446,10 +1435,10 @@ void TestDriver::display_ref_input() {
   
   printf("  fire %d round_mode %d fp_format %d op_code %d\n", input.fire, input.round_mode, input.fp_format, input.op_code);
   printf("  fp_aIsFpCanonicalNAN %d fp_bIsFpCanonicalNAN %d fp_cIsFpCanonicalNAN %d\n", input.fp_aIsFpCanonicalNAN, input.fp_bIsFpCanonicalNAN, input.fp_cIsFpCanonicalNAN);
-  printf("  fp_a: \n");
-  for (int i = 0; i < dim; i++) {
-    for (int j = 0; j < dim_k; j++) {
-      printf("%f ", Uint64ToFloat(input.fp_a[i][j]));
+  printf("  fp_a (transposed): \n");
+  for (int i = 0; i < dim_k; i++) {
+    for (int j = 0; j < dim; j++) {
+      printf("%f ", Uint64ToFloat(input.fp_a_transpose[i][j]));
     }
     printf("\n");
   }

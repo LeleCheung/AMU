@@ -32,9 +32,9 @@ class AMCore() extends Module{
   val io = IO(new Bundle() {
     val fire                 = Input (Bool()) // valid
 
-    val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
-    val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
-    val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
+    val fp_a_transpose     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix a is transposed in cache
+    val fp_b               = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
+    val fp_c               = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -51,6 +51,14 @@ class AMCore() extends Module{
   // node
   // val node
 
+  // transpose fp_a_transpose into 64*4 fp_a
+  val fp_a = Wire(Vec(dim, Vec(dim_k, UInt(floatWidth.W))))
+  for(i <- 0 until dim){
+    for(j <- 0 until dim_k){
+      fp_a(i)(j) := io.fp_a_transpose(j)(i)
+    }
+  }
+
   // instantiate 8*8 SubCore
   val SubCoreArray = Seq.fill(num, num)(Module(new SubCore()))
 
@@ -59,7 +67,7 @@ class AMCore() extends Module{
   for(n <- 0 until num){
     for(i <- 0 until dim_n){
       for(j <- 0 until dim_k){
-        fp_a_matrix(n)(i)(j) := io.fp_a(i+n*dim_n)(j)
+        fp_a_matrix(n)(i)(j) := fp_a(i+n*dim_n)(j)
       }
     }
   }

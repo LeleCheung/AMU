@@ -9,7 +9,7 @@ struct MatrixInput{
   /*
     val fire                 = Input (Bool()) // valid
 
-    val fp_a, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
+    val fp_a_transpose, fp_b, fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix a, b, c 
 
     val round_mode           = Input (UInt(3.W)) // rounding mode
     val fp_format            = Input (UInt(2.W)) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -20,7 +20,7 @@ struct MatrixInput{
     val fp_cIsFpCanonicalNAN = Input(Bool())
   */
   bool fire;
-  uint64_t fp_a[dim][dim_k];
+  uint64_t fp_a_transpose[dim_k][dim]; // A is transposed in cache
   uint64_t fp_b[dim_k][dim];
   uint64_t fp_c[dim][dim];
   uint8_t round_mode;

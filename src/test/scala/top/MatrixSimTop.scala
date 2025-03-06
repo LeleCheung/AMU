@@ -30,9 +30,9 @@ class MatrixBundle extends Bundle with MatrixParameter
 class MatrixInputIO extends MatrixBundle {
   val fire                 = Bool() // valid
 
-  val fp_a     = Input(Vec(dim, Vec(dim_k, UInt(floatWidth.W)))) // input matrix a
-  val fp_b     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
-  val fp_c     = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
+  val fp_a_transpose     = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix a is transposed in cache
+  val fp_b               = Input(Vec(dim_k, Vec(dim, UInt(floatWidth.W)))) // input matrix b
+  val fp_c               = Input(Vec(dim, Vec(dim, UInt(floatWidth.W)))) // input matrix c 
 
   val round_mode           = UInt(3.W) // rounding mode
   val fp_format            = UInt(2.W) // result format: b01->fp16,b10->fp32,b11->fp64
@@ -62,7 +62,7 @@ class SimTop() extends Module{
 
   // connect IO
   AMU.io.fire := io.in.bits.fire
-  AMU.io.fp_a := io.in.bits.fp_a
+  AMU.io.fp_a_transpose := io.in.bits.fp_a_transpose
   AMU.io.fp_b := io.in.bits.fp_b
   AMU.io.fp_c := io.in.bits.fp_c
   AMU.io.round_mode := io.in.bits.round_mode
