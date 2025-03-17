@@ -13,21 +13,54 @@ extern "C" {
 
 #include <string.h>
 
+#include <cstdint>
+#include <cstring>
+#include <iomanip>
+#include <sstream>
+#include <stdexcept>
+#include <cstdio>
+#include <cmath>
+
 #define DIM 16
 #define DIM_K 4
 #define NUM 3
 
-double Uint64ToFloat(uint64_t packed) {
-  double value;
-  memcpy(&value, &packed, sizeof(double)); // Copy memory to convert
-  return value;
+// Convert a 64-bit unsigned integer to a float (from FP16 format)
+double Uint64FP16ToFloat(uint64_t packed) {
+  // Extract the FP16 value (lower 16 bits)
+  uint16_t fp16 = static_cast<uint16_t>(packed & 0xFFFF);
+  
+  // Convert FP16 to float
+  if (fp16 == 0) return 0.0; // Handle zero case
+  if ((fp16 & 0x7C00) == 0x7C00) return fp16 & 0x8000 ? -INFINITY : INFINITY; // Handle +Inf/-Inf
+  if ((fp16 & 0x7FFF) == 0x7FFF) return NAN; // Handle NaN
+
+  int sign = (fp16 >> 15) & 0x1; // Extract sign bit
+  int exponent = (fp16 >> 10) & 0x1F; // Extract exponent
+  int mantissa = fp16 & 0x3FF; // Extract mantissa
+
+  // Calculate the actual float value
+  if (exponent == 0) {
+      // Denormalized case
+      return (sign ? -1 : 1) * (mantissa / 1024.0f) * pow(2, -14);
+  } else {
+      // Normalized case
+      return (sign ? -1 : 1) * (1 + mantissa / 1024.0f) * pow(2, exponent - 15);
+  }
 }
 
-uint64_t fp64ToUint64(const char* fp64Hex) {
-  uint64_t packed = 0;
-  sscanf(fp64Hex, "%lx", &packed); // Read the hexadecimal string
+// Convert a hexadecimal string to a 64-bit unsigned integer representing FP16
+uint64_t CharFP16ToUint64FP16(const char* fp16Hex) {
+  uint64_t packed = 0; // Initialize packed variable
+  uint16_t fp16; // Variable to store the FP16 value
 
-  return packed;
+  // Read the 16-bit FP16 hexadecimal value
+  sscanf(fp16Hex, "%hx", &fp16); // Use %hx to read unsigned short
+
+  // Place the FP16 value in the lower 16 bits of the 64-bit integer, setting the rest to 0
+  packed = static_cast<uint64_t>(fp16);
+
+  return packed; // Return the 64-bit unsigned integer
 }
 
 
@@ -501,7 +534,7 @@ void TestDriver::get_random_input() {
 
   input.fire = true;
   input.round_mode = 0b000; // round to nearest
-  input.fp_format = 0b11; // fp64
+  input.fp_format = 0b01; // fp16
   input.op_code = 0b0000; // fmul
   input.fp_aIsFpCanonicalNAN = 0;
   input.fp_bIsFpCanonicalNAN = 0;
@@ -525,7 +558,7 @@ void TestDriver::get_random_input() {
   for (int x = 0; x < DIM_K; x++) {
       for (int y = 0; y < DIM; y++) {
           fscanf(file_read, "%s", fp64Hex); // Read hex string
-          input.fp_a_transpose[x][y] = fp64ToUint64(fp64Hex); // Convert to uint64
+          input.fp_a_transpose[x][y] = CharFP16ToUint64FP16(fp64Hex); // Convert to uint64
       }
   }
   fgetc(file_read); // Ignore newlines
@@ -534,7 +567,7 @@ void TestDriver::get_random_input() {
   for (int x = 0; x < DIM_K; x++) {
       for (int y = 0; y < DIM; y++) {
           fscanf(file_read, "%s", fp64Hex); // Read hex string
-          input.fp_b[x][y] = fp64ToUint64(fp64Hex);
+          input.fp_b[x][y] = CharFP16ToUint64FP16(fp64Hex);
       }
   }
   fgetc(file_read); // Ignore newline
@@ -550,7 +583,7 @@ void TestDriver::get_random_input() {
   for (int x = 0; x < DIM; x++) {
       for (int y = 0; y < DIM; y++) {
           fscanf(file_read, "%s", fp64Hex); // Read hex string
-          expect_output.fp_result[x][y] = fp64ToUint64(fp64Hex);
+          expect_output.fp_result[x][y] = CharFP16ToUint64FP16(fp64Hex);
       }
   }
   fgetc(file_read); // Ignore newline
@@ -1438,21 +1471,21 @@ void TestDriver::display_ref_input() {
   printf("  fp_a (transposed): \n");
   for (int i = 0; i < dim_k; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%f ", Uint64ToFloat(input.fp_a_transpose[i][j]));
+      printf("%f ", Uint64FP16ToFloat(input.fp_a_transpose[i][j]));
     }
     printf("\n");
   }
   printf("  fp_b: \n");
   for (int i = 0; i < dim_k; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%f ", Uint64ToFloat(input.fp_b[i][j]));
+      printf("%f ", Uint64FP16ToFloat(input.fp_b[i][j]));
     }
     printf("\n");
   }
   printf("  fp_c: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%f ", Uint64ToFloat(input.fp_c[i][j]));
+      printf("%f ", Uint64FP16ToFloat(input.fp_c[i][j]));
     }
     printf("\n");
   }
@@ -1466,7 +1499,7 @@ void TestDriver::display_ref_output() {
   printf("  fp_result: \n");
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
-      printf("%f ", Uint64ToFloat(expect_output.fp_result[i][j]));
+      printf("%f ", Uint64FP16ToFloat(expect_output.fp_result[i][j]));
     }
     printf("\n");
   }
@@ -1481,7 +1514,7 @@ void TestDriver::display_dut() {
   for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
       // printf("%lx ", dut_output.fp_result[i][j]);
-      printf("%f ", Uint64ToFloat(dut_output.fp_result[i][j]));
+      printf("%f ", Uint64FP16ToFloat(dut_output.fp_result[i][j]));
     }
     printf("\n");
   }
